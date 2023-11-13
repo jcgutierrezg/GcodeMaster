@@ -1,4 +1,0 @@
-source;share/robocol_arm_moveit2/local_setup.bash
-source;share/robocol_arm_moveit2/local_setup.dsv
-source;share/robocol_arm_moveit2/local_setup.sh
-source;share/robocol_arm_moveit2/local_setup.zsh

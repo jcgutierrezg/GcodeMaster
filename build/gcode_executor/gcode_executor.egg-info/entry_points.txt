@@ -1,3 +1,0 @@
-[console_scripts]
-gcode_reader = gcode_executor.gcode_reader:main
-gui = gcode_executor.gui:main

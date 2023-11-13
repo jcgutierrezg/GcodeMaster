@@ -1,9 +1,0 @@
-# Default initial positions for robocol_arm's ros2_control fake system
-
-initial_positions:
-  robocol_joint1: 0.0
-  robocol_joint2: -1.57079
-  robocol_joint3: 1.91986
-  robocol_joint4: 0.0
-  robocol_joint5: -2.059488
-  robocol_joint6: 0.0

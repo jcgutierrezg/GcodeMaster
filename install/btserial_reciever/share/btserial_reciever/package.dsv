@@ -1,6 +1,0 @@
-source;share/btserial_reciever/hook/pythonpath.ps1
-source;share/btserial_reciever/hook/pythonpath.dsv
-source;share/btserial_reciever/hook/pythonpath.sh
-source;share/btserial_reciever/hook/ament_prefix_path.ps1
-source;share/btserial_reciever/hook/ament_prefix_path.dsv
-source;share/btserial_reciever/hook/ament_prefix_path.sh
