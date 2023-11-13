@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model
+	href="http://download.ros.org/schema/package_format3.xsd"
+	schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+	<name>robocol_arm_moveit2</name>
+	<version>1.0.0</version>
+	<description>
+		This package contains 2023 Robocol's arm description and configuration. Which is based in a prior implementation of Robocol's arm.
+	</description>
+	<maintainer email="fk.luepke146@uniandes.edu.co">Franz Luepke</maintainer>
+	<maintainer email="jc.gutierrezg@uniandes.edu.co">Juan Camilo Gutierrez</maintainer>
+	<license>BSD</license>
+	
+	<buildtool_depend>ament_cmake</buildtool_depend>
+	
+	<depend>rclcpp</depend>
+	<depend>std_msgs</depend>
+	<depend>geometry_msgs</depend>
+	<depend>trajectory_msgs</depend>
+	<depend>moveit_visual_tools</depend>
+	
+	<test_depend>ament_lint_auto</test_depend>
+	<test_depend>ament_lint_common</test_depend>
+	
+	<export>
+		<build_type>ament_cmake</build_type>
+	</export>
+</package>

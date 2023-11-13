@@ -1,0 +1,40 @@
+running egg_info
+creating ../../build/btserial_reciever/btserial_reciever.egg-info
+writing ../../build/btserial_reciever/btserial_reciever.egg-info/PKG-INFO
+writing dependency_links to ../../build/btserial_reciever/btserial_reciever.egg-info/dependency_links.txt
+writing entry points to ../../build/btserial_reciever/btserial_reciever.egg-info/entry_points.txt
+writing requirements to ../../build/btserial_reciever/btserial_reciever.egg-info/requires.txt
+writing top-level names to ../../build/btserial_reciever/btserial_reciever.egg-info/top_level.txt
+writing manifest file '../../build/btserial_reciever/btserial_reciever.egg-info/SOURCES.txt'
+reading manifest file '../../build/btserial_reciever/btserial_reciever.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../../build/btserial_reciever/btserial_reciever.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build
+creating /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib
+creating /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever
+copying btserial_reciever/reciever.py -> /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever
+copying btserial_reciever/__init__.py -> /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever
+copying btserial_reciever/translate_quaternion.py -> /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever
+running install
+running install_lib
+creating /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever
+copying /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever/reciever.py -> /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever
+copying /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever/__init__.py -> /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever
+copying /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build/lib/btserial_reciever/translate_quaternion.py -> /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever
+byte-compiling /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever/reciever.py to reciever.cpython-310.pyc
+byte-compiling /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever/translate_quaternion.py to translate_quaternion.cpython-310.pyc
+running install_data
+creating /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/ament_index
+creating /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/ament_index/resource_index
+creating /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/ament_index/resource_index/packages
+copying resource/btserial_reciever -> /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/ament_index/resource_index/packages
+copying package.xml -> /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever
+running install_egg_info
+Copying ../../build/btserial_reciever/btserial_reciever.egg-info to /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever-1.0.0-py3.10.egg-info
+running install_scripts
+Installing reciever script to /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/btserial_reciever
+Installing translate_quaternion script to /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/btserial_reciever
+writing list of installed files to '/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/install.log'

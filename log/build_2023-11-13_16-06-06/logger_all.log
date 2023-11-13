@@ -1,0 +1,312 @@
+[1.549s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[1.549s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7f03d3150100>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f03d30f87c0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f03d30f87c0>>, mixin_verb=('build',))
+[1.613s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.613s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.613s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.613s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.613s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.613s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.613s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/jcgg/robocol_ws/GcodeMaster'
+[1.613s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.629s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extensions ['ignore', 'ignore_ament_install']
+[1.630s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extension 'ignore'
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extension 'ignore_ament_install'
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extensions ['colcon_pkg']
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extension 'colcon_pkg'
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extensions ['colcon_meta']
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extension 'colcon_meta'
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extensions ['ros']
+[1.631s] Level 1:colcon.colcon_core.package_identification:_identify(src/black_arm) by extension 'ros'
+[1.633s] DEBUG:colcon.colcon_core.package_identification:Package 'src/black_arm' with type 'ros.ament_cmake' and name 'black_arm'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extensions ['ignore', 'ignore_ament_install']
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extension 'ignore'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extension 'ignore_ament_install'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extensions ['colcon_pkg']
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extension 'colcon_pkg'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extensions ['colcon_meta']
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extension 'colcon_meta'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extensions ['ros']
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/btserial_reciever) by extension 'ros'
+[1.635s] DEBUG:colcon.colcon_core.package_identification:Package 'src/btserial_reciever' with type 'ros.ament_python' and name 'btserial_reciever'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extensions ['ignore', 'ignore_ament_install']
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extension 'ignore'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extension 'ignore_ament_install'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extensions ['colcon_pkg']
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extension 'colcon_pkg'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extensions ['colcon_meta']
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extension 'colcon_meta'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extensions ['ros']
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/gcode_executor) by extension 'ros'
+[1.636s] DEBUG:colcon.colcon_core.package_identification:Package 'src/gcode_executor' with type 'ros.ament_python' and name 'gcode_executor'
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extensions ['ignore', 'ignore_ament_install']
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extension 'ignore'
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extension 'ignore_ament_install'
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extensions ['colcon_pkg']
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extension 'colcon_pkg'
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extensions ['colcon_meta']
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extension 'colcon_meta'
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extensions ['ros']
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/robocol_arm_moveit2) by extension 'ros'
+[1.637s] DEBUG:colcon.colcon_core.package_identification:Package 'src/robocol_arm_moveit2' with type 'ros.ament_cmake' and name 'robocol_arm_moveit2'
+[1.637s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.637s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.637s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.637s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.637s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.759s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.759s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.777s] WARNING:colcon.colcon_core.prefix_path.colcon:The path '/home/jcgg/robocol_ws/install' in the environment variable COLCON_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/jcgg/robocol_ws/install/black_arm' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/jcgg/robocol_ws/install/robocol_arm_moveit2' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/jcgg/robocol_ws/install/pilz_planner' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/jcgg/robocol_ws/install/gcode_executor' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/jcgg/robocol_ws/install/btserial_reciever' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/jcgg/robocol_ws/install/black_arm' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/jcgg/robocol_ws/install/robocol_arm_moveit2' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[1.780s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/jcgg/robocol_ws/install/pilz_planner' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[1.800s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 59 installed packages in /home/jcgg/ws_moveit/install
+[1.820s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 321 installed packages in /opt/ros/humble
+[1.821s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[1.920s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'cmake_args' from command line to 'None'
+[1.920s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'cmake_target' from command line to 'None'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'cmake_clean_cache' from command line to 'False'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'cmake_clean_first' from command line to 'False'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'cmake_force_configure' from command line to 'False'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'ament_cmake_args' from command line to 'None'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'catkin_cmake_args' from command line to 'None'
+[1.921s] Level 5:colcon.colcon_core.verb:set package 'btserial_reciever' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.921s] DEBUG:colcon.colcon_core.verb:Building package 'btserial_reciever' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever', 'merge_install': False, 'path': '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever', 'symlink_install': False, 'test_result_base': None}
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'cmake_args' from command line to 'None'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'cmake_target' from command line to 'None'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'cmake_clean_cache' from command line to 'False'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'cmake_clean_first' from command line to 'False'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'cmake_force_configure' from command line to 'False'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'ament_cmake_args' from command line to 'None'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'catkin_cmake_args' from command line to 'None'
+[1.939s] Level 5:colcon.colcon_core.verb:set package 'gcode_executor' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.939s] DEBUG:colcon.colcon_core.verb:Building package 'gcode_executor' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor', 'merge_install': False, 'path': '/home/jcgg/robocol_ws/GcodeMaster/src/gcode_executor', 'symlink_install': False, 'test_result_base': None}
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'cmake_args' from command line to 'None'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'cmake_target' from command line to 'None'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'cmake_clean_cache' from command line to 'False'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'cmake_clean_first' from command line to 'False'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'cmake_force_configure' from command line to 'False'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'ament_cmake_args' from command line to 'None'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'catkin_cmake_args' from command line to 'None'
+[1.957s] Level 5:colcon.colcon_core.verb:set package 'robocol_arm_moveit2' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.957s] DEBUG:colcon.colcon_core.verb:Building package 'robocol_arm_moveit2' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2', 'merge_install': False, 'path': '/home/jcgg/robocol_ws/GcodeMaster/src/robocol_arm_moveit2', 'symlink_install': False, 'test_result_base': None}
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'cmake_args' from command line to 'None'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'cmake_target' from command line to 'None'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'cmake_clean_cache' from command line to 'False'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'cmake_clean_first' from command line to 'False'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'cmake_force_configure' from command line to 'False'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'ament_cmake_args' from command line to 'None'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'catkin_cmake_args' from command line to 'None'
+[1.975s] Level 5:colcon.colcon_core.verb:set package 'black_arm' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.975s] DEBUG:colcon.colcon_core.verb:Building package 'black_arm' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/jcgg/robocol_ws/GcodeMaster/build/black_arm', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm', 'merge_install': False, 'path': '/home/jcgg/robocol_ws/GcodeMaster/src/black_arm', 'symlink_install': False, 'test_result_base': None}
+[1.993s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.011s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.011s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/jcgg/robocol_ws/GcodeMaster/src/robocol_arm_moveit2' with build type 'ament_cmake'
+[2.012s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/jcgg/robocol_ws/GcodeMaster/src/robocol_arm_moveit2'
+[2.031s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.032s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.032s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.101s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever' with build type 'ament_python'
+[2.102s] Level 1:colcon.colcon_core.shell:create_environment_hook('btserial_reciever', 'ament_prefix_path')
+[2.120s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/hook/ament_prefix_path.ps1'
+[2.121s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/hook/ament_prefix_path.dsv'
+[2.121s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/hook/ament_prefix_path.sh'
+[2.141s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.141s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.201s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/jcgg/robocol_ws/GcodeMaster/src/gcode_executor' with build type 'ament_python'
+[2.201s] Level 1:colcon.colcon_core.shell:create_environment_hook('gcode_executor', 'ament_prefix_path')
+[2.220s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/hook/ament_prefix_path.ps1'
+[2.220s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/hook/ament_prefix_path.dsv'
+[2.221s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/hook/ament_prefix_path.sh'
+[2.239s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.240s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.304s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --build /home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2 -- -j8 -l8
+[2.557s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever'
+[2.575s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.575s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.851s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/jcgg/robocol_ws/GcodeMaster/src/gcode_executor'
+[2.869s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.869s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.930s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --build /home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2 -- -j8 -l8
+[3.045s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --install /home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2
+[3.065s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(robocol_arm_moveit2)
+[3.069s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --install /home/jcgg/robocol_ws/GcodeMaster/build/robocol_arm_moveit2
+[3.101s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2' for CMake module files
+[3.101s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2' for CMake config files
+[3.101s] Level 1:colcon.colcon_core.shell:create_environment_hook('robocol_arm_moveit2', 'cmake_prefix_path')
+[3.120s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/hook/cmake_prefix_path.ps1'
+[3.120s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/hook/cmake_prefix_path.dsv'
+[3.121s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/hook/cmake_prefix_path.sh'
+[3.121s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/lib'
+[3.122s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/bin'
+[3.122s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/lib/pkgconfig/robocol_arm_moveit2.pc'
+[3.122s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/lib/python3.10/site-packages'
+[3.122s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/bin'
+[3.140s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.ps1'
+[3.141s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.dsv'
+[3.142s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.sh'
+[3.142s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.bash'
+[3.143s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.zsh'
+[3.144s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/colcon-core/packages/robocol_arm_moveit2)
+[3.258s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(robocol_arm_moveit2)
+[3.277s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2' for CMake module files
+[3.277s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2' for CMake config files
+[3.278s] Level 1:colcon.colcon_core.shell:create_environment_hook('robocol_arm_moveit2', 'cmake_prefix_path')
+[3.296s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/hook/cmake_prefix_path.ps1'
+[3.296s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/hook/cmake_prefix_path.dsv'
+[3.297s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/hook/cmake_prefix_path.sh'
+[3.297s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/lib'
+[3.297s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/bin'
+[3.297s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/lib/pkgconfig/robocol_arm_moveit2.pc'
+[3.297s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/lib/python3.10/site-packages'
+[3.298s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/bin'
+[3.316s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.ps1'
+[3.317s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.dsv'
+[3.317s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.sh'
+[3.318s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.bash'
+[3.318s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/robocol_arm_moveit2/package.zsh'
+[3.318s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2/share/colcon-core/packages/robocol_arm_moveit2)
+[3.319s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/jcgg/robocol_ws/GcodeMaster/src/black_arm' with build type 'ament_cmake'
+[3.319s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/jcgg/robocol_ws/GcodeMaster/src/black_arm'
+[3.342s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.342s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[3.417s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/build/black_arm': AMENT_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:/home/jcgg/ws_moveit/install/moveit2_tutorials:/home/jcgg/ws_moveit/install/moveit_visual_tools:/home/jcgg/ws_moveit/install/rviz_visual_tools:/home/jcgg/ws_moveit/install/moveit_task_constructor_visualization:/home/jcgg/ws_moveit/install/moveit_task_constructor_demo:/home/jcgg/ws_moveit/install/moveit_task_constructor_capabilities:/home/jcgg/ws_moveit/install/moveit_task_constructor_core:/home/jcgg/ws_moveit/install/rviz_marker_tools:/home/jcgg/ws_moveit/install/rosparam_shortcuts:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner_testutils:/home/jcgg/ws_moveit/install/moveit_runtime:/home/jcgg/ws_moveit/install/moveit:/home/jcgg/ws_moveit/install/moveit_planners:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner:/home/jcgg/ws_moveit/install/moveit_task_constructor_msgs:/home/jcgg/ws_moveit/install/moveit_ros_control_interface:/home/jcgg/ws_moveit/install/moveit_plugins:/home/jcgg/ws_moveit/install/moveit_simple_controller_manager:/home/jcgg/ws_moveit/install/moveit_setup_assistant:/home/jcgg/ws_moveit/install/moveit_setup_srdf_plugins:/home/jcgg/ws_moveit/install/moveit_setup_core_plugins:/home/jcgg/ws_moveit/install/moveit_setup_controllers:/home/jcgg/ws_moveit/install/moveit_setup_app_plugins:/home/jcgg/ws_moveit/install/moveit_setup_framework:/home/jcgg/ws_moveit/install/moveit_servo:/home/jcgg/ws_moveit/install/moveit_ros:/home/jcgg/ws_moveit/install/moveit_ros_visualization:/home/jcgg/ws_moveit/install/moveit_py:/home/jcgg/ws_moveit/install/moveit_hybrid_planning:/home/jcgg/ws_moveit/install/moveit_ros_planning_interface:/home/jcgg/ws_moveit/install/moveit_ros_benchmarks:/home/jcgg/ws_moveit/install/moveit_ros_warehouse:/home/jcgg/ws_moveit/install/moveit_ros_robot_interaction:/home/jcgg/ws_moveit/install/moveit_ros_perception:/home/jcgg/ws_moveit/install/moveit_resources_prbt_pg70_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_moveit_config:/home/jcgg/ws_moveit/install/moveit_ros_move_group:/home/jcgg/ws_moveit/install/moveit_planners_ompl:/home/jcgg/ws_moveit/install/moveit_kinematics:/home/jcgg/ws_moveit/install/moveit_ros_planning:/home/jcgg/ws_moveit/install/moveit_ros_occupancy_map_monitor:/home/jcgg/ws_moveit/install/moveit_resources_prbt_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_ikfast_manipulator_plugin:/home/jcgg/ws_moveit/install/moveit_resources:/home/jcgg/ws_moveit/install/moveit_resources_pr2_description:/home/jcgg/ws_moveit/install/moveit_resources_panda_moveit_config:/home/jcgg/ws_moveit/install/dual_arm_panda_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_panda_description:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_description:/home/jcgg/ws_moveit/install/moveit_planners_stomp:/home/jcgg/ws_moveit/install/moveit_planners_chomp:/home/jcgg/ws_moveit/install/moveit_chomp_optimizer_adapter:/home/jcgg/ws_moveit/install/chomp_motion_planner:/home/jcgg/ws_moveit/install/moveit_core:/home/jcgg/ws_moveit/install/moveit_msgs:/home/jcgg/ws_moveit/install/moveit_common:/home/jcgg/robocol_ws/install/black_arm:/home/jcgg/robocol_ws/install/robocol_arm_moveit2:/home/jcgg/robocol_ws/install/pilz_planner:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --build /home/jcgg/robocol_ws/GcodeMaster/build/black_arm -- -j8 -l8
+[3.482s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/build/black_arm' returned '0': AMENT_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:/home/jcgg/ws_moveit/install/moveit2_tutorials:/home/jcgg/ws_moveit/install/moveit_visual_tools:/home/jcgg/ws_moveit/install/rviz_visual_tools:/home/jcgg/ws_moveit/install/moveit_task_constructor_visualization:/home/jcgg/ws_moveit/install/moveit_task_constructor_demo:/home/jcgg/ws_moveit/install/moveit_task_constructor_capabilities:/home/jcgg/ws_moveit/install/moveit_task_constructor_core:/home/jcgg/ws_moveit/install/rviz_marker_tools:/home/jcgg/ws_moveit/install/rosparam_shortcuts:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner_testutils:/home/jcgg/ws_moveit/install/moveit_runtime:/home/jcgg/ws_moveit/install/moveit:/home/jcgg/ws_moveit/install/moveit_planners:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner:/home/jcgg/ws_moveit/install/moveit_task_constructor_msgs:/home/jcgg/ws_moveit/install/moveit_ros_control_interface:/home/jcgg/ws_moveit/install/moveit_plugins:/home/jcgg/ws_moveit/install/moveit_simple_controller_manager:/home/jcgg/ws_moveit/install/moveit_setup_assistant:/home/jcgg/ws_moveit/install/moveit_setup_srdf_plugins:/home/jcgg/ws_moveit/install/moveit_setup_core_plugins:/home/jcgg/ws_moveit/install/moveit_setup_controllers:/home/jcgg/ws_moveit/install/moveit_setup_app_plugins:/home/jcgg/ws_moveit/install/moveit_setup_framework:/home/jcgg/ws_moveit/install/moveit_servo:/home/jcgg/ws_moveit/install/moveit_ros:/home/jcgg/ws_moveit/install/moveit_ros_visualization:/home/jcgg/ws_moveit/install/moveit_py:/home/jcgg/ws_moveit/install/moveit_hybrid_planning:/home/jcgg/ws_moveit/install/moveit_ros_planning_interface:/home/jcgg/ws_moveit/install/moveit_ros_benchmarks:/home/jcgg/ws_moveit/install/moveit_ros_warehouse:/home/jcgg/ws_moveit/install/moveit_ros_robot_interaction:/home/jcgg/ws_moveit/install/moveit_ros_perception:/home/jcgg/ws_moveit/install/moveit_resources_prbt_pg70_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_moveit_config:/home/jcgg/ws_moveit/install/moveit_ros_move_group:/home/jcgg/ws_moveit/install/moveit_planners_ompl:/home/jcgg/ws_moveit/install/moveit_kinematics:/home/jcgg/ws_moveit/install/moveit_ros_planning:/home/jcgg/ws_moveit/install/moveit_ros_occupancy_map_monitor:/home/jcgg/ws_moveit/install/moveit_resources_prbt_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_ikfast_manipulator_plugin:/home/jcgg/ws_moveit/install/moveit_resources:/home/jcgg/ws_moveit/install/moveit_resources_pr2_description:/home/jcgg/ws_moveit/install/moveit_resources_panda_moveit_config:/home/jcgg/ws_moveit/install/dual_arm_panda_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_panda_description:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_description:/home/jcgg/ws_moveit/install/moveit_planners_stomp:/home/jcgg/ws_moveit/install/moveit_planners_chomp:/home/jcgg/ws_moveit/install/moveit_chomp_optimizer_adapter:/home/jcgg/ws_moveit/install/chomp_motion_planner:/home/jcgg/ws_moveit/install/moveit_core:/home/jcgg/ws_moveit/install/moveit_msgs:/home/jcgg/ws_moveit/install/moveit_common:/home/jcgg/robocol_ws/install/black_arm:/home/jcgg/robocol_ws/install/robocol_arm_moveit2:/home/jcgg/robocol_ws/install/pilz_planner:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --build /home/jcgg/robocol_ws/GcodeMaster/build/black_arm -- -j8 -l8
+[3.532s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/build/black_arm': AMENT_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:/home/jcgg/ws_moveit/install/moveit2_tutorials:/home/jcgg/ws_moveit/install/moveit_visual_tools:/home/jcgg/ws_moveit/install/rviz_visual_tools:/home/jcgg/ws_moveit/install/moveit_task_constructor_visualization:/home/jcgg/ws_moveit/install/moveit_task_constructor_demo:/home/jcgg/ws_moveit/install/moveit_task_constructor_capabilities:/home/jcgg/ws_moveit/install/moveit_task_constructor_core:/home/jcgg/ws_moveit/install/rviz_marker_tools:/home/jcgg/ws_moveit/install/rosparam_shortcuts:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner_testutils:/home/jcgg/ws_moveit/install/moveit_runtime:/home/jcgg/ws_moveit/install/moveit:/home/jcgg/ws_moveit/install/moveit_planners:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner:/home/jcgg/ws_moveit/install/moveit_task_constructor_msgs:/home/jcgg/ws_moveit/install/moveit_ros_control_interface:/home/jcgg/ws_moveit/install/moveit_plugins:/home/jcgg/ws_moveit/install/moveit_simple_controller_manager:/home/jcgg/ws_moveit/install/moveit_setup_assistant:/home/jcgg/ws_moveit/install/moveit_setup_srdf_plugins:/home/jcgg/ws_moveit/install/moveit_setup_core_plugins:/home/jcgg/ws_moveit/install/moveit_setup_controllers:/home/jcgg/ws_moveit/install/moveit_setup_app_plugins:/home/jcgg/ws_moveit/install/moveit_setup_framework:/home/jcgg/ws_moveit/install/moveit_servo:/home/jcgg/ws_moveit/install/moveit_ros:/home/jcgg/ws_moveit/install/moveit_ros_visualization:/home/jcgg/ws_moveit/install/moveit_py:/home/jcgg/ws_moveit/install/moveit_hybrid_planning:/home/jcgg/ws_moveit/install/moveit_ros_planning_interface:/home/jcgg/ws_moveit/install/moveit_ros_benchmarks:/home/jcgg/ws_moveit/install/moveit_ros_warehouse:/home/jcgg/ws_moveit/install/moveit_ros_robot_interaction:/home/jcgg/ws_moveit/install/moveit_ros_perception:/home/jcgg/ws_moveit/install/moveit_resources_prbt_pg70_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_moveit_config:/home/jcgg/ws_moveit/install/moveit_ros_move_group:/home/jcgg/ws_moveit/install/moveit_planners_ompl:/home/jcgg/ws_moveit/install/moveit_kinematics:/home/jcgg/ws_moveit/install/moveit_ros_planning:/home/jcgg/ws_moveit/install/moveit_ros_occupancy_map_monitor:/home/jcgg/ws_moveit/install/moveit_resources_prbt_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_ikfast_manipulator_plugin:/home/jcgg/ws_moveit/install/moveit_resources:/home/jcgg/ws_moveit/install/moveit_resources_pr2_description:/home/jcgg/ws_moveit/install/moveit_resources_panda_moveit_config:/home/jcgg/ws_moveit/install/dual_arm_panda_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_panda_description:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_description:/home/jcgg/ws_moveit/install/moveit_planners_stomp:/home/jcgg/ws_moveit/install/moveit_planners_chomp:/home/jcgg/ws_moveit/install/moveit_chomp_optimizer_adapter:/home/jcgg/ws_moveit/install/chomp_motion_planner:/home/jcgg/ws_moveit/install/moveit_core:/home/jcgg/ws_moveit/install/moveit_msgs:/home/jcgg/ws_moveit/install/moveit_common:/home/jcgg/robocol_ws/install/black_arm:/home/jcgg/robocol_ws/install/robocol_arm_moveit2:/home/jcgg/robocol_ws/install/pilz_planner:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --install /home/jcgg/robocol_ws/GcodeMaster/build/black_arm
+[3.551s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(black_arm)
+[3.554s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/build/black_arm' returned '0': AMENT_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/jcgg/robocol_ws/GcodeMaster/install/robocol_arm_moveit2:/home/jcgg/ws_moveit/install/moveit2_tutorials:/home/jcgg/ws_moveit/install/moveit_visual_tools:/home/jcgg/ws_moveit/install/rviz_visual_tools:/home/jcgg/ws_moveit/install/moveit_task_constructor_visualization:/home/jcgg/ws_moveit/install/moveit_task_constructor_demo:/home/jcgg/ws_moveit/install/moveit_task_constructor_capabilities:/home/jcgg/ws_moveit/install/moveit_task_constructor_core:/home/jcgg/ws_moveit/install/rviz_marker_tools:/home/jcgg/ws_moveit/install/rosparam_shortcuts:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner_testutils:/home/jcgg/ws_moveit/install/moveit_runtime:/home/jcgg/ws_moveit/install/moveit:/home/jcgg/ws_moveit/install/moveit_planners:/home/jcgg/ws_moveit/install/pilz_industrial_motion_planner:/home/jcgg/ws_moveit/install/moveit_task_constructor_msgs:/home/jcgg/ws_moveit/install/moveit_ros_control_interface:/home/jcgg/ws_moveit/install/moveit_plugins:/home/jcgg/ws_moveit/install/moveit_simple_controller_manager:/home/jcgg/ws_moveit/install/moveit_setup_assistant:/home/jcgg/ws_moveit/install/moveit_setup_srdf_plugins:/home/jcgg/ws_moveit/install/moveit_setup_core_plugins:/home/jcgg/ws_moveit/install/moveit_setup_controllers:/home/jcgg/ws_moveit/install/moveit_setup_app_plugins:/home/jcgg/ws_moveit/install/moveit_setup_framework:/home/jcgg/ws_moveit/install/moveit_servo:/home/jcgg/ws_moveit/install/moveit_ros:/home/jcgg/ws_moveit/install/moveit_ros_visualization:/home/jcgg/ws_moveit/install/moveit_py:/home/jcgg/ws_moveit/install/moveit_hybrid_planning:/home/jcgg/ws_moveit/install/moveit_ros_planning_interface:/home/jcgg/ws_moveit/install/moveit_ros_benchmarks:/home/jcgg/ws_moveit/install/moveit_ros_warehouse:/home/jcgg/ws_moveit/install/moveit_ros_robot_interaction:/home/jcgg/ws_moveit/install/moveit_ros_perception:/home/jcgg/ws_moveit/install/moveit_resources_prbt_pg70_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_moveit_config:/home/jcgg/ws_moveit/install/moveit_ros_move_group:/home/jcgg/ws_moveit/install/moveit_planners_ompl:/home/jcgg/ws_moveit/install/moveit_kinematics:/home/jcgg/ws_moveit/install/moveit_ros_planning:/home/jcgg/ws_moveit/install/moveit_ros_occupancy_map_monitor:/home/jcgg/ws_moveit/install/moveit_resources_prbt_support:/home/jcgg/ws_moveit/install/moveit_resources_prbt_ikfast_manipulator_plugin:/home/jcgg/ws_moveit/install/moveit_resources:/home/jcgg/ws_moveit/install/moveit_resources_pr2_description:/home/jcgg/ws_moveit/install/moveit_resources_panda_moveit_config:/home/jcgg/ws_moveit/install/dual_arm_panda_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_panda_description:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_moveit_config:/home/jcgg/ws_moveit/install/moveit_resources_fanuc_description:/home/jcgg/ws_moveit/install/moveit_planners_stomp:/home/jcgg/ws_moveit/install/moveit_planners_chomp:/home/jcgg/ws_moveit/install/moveit_chomp_optimizer_adapter:/home/jcgg/ws_moveit/install/chomp_motion_planner:/home/jcgg/ws_moveit/install/moveit_core:/home/jcgg/ws_moveit/install/moveit_msgs:/home/jcgg/ws_moveit/install/moveit_common:/home/jcgg/robocol_ws/install/black_arm:/home/jcgg/robocol_ws/install/robocol_arm_moveit2:/home/jcgg/robocol_ws/install/pilz_planner:/home/jcgg/ws_moveit/install/moveit_configs_utils:/home/jcgg/robocol_ws/install/gcode_executor:/home/jcgg/robocol_ws/install/btserial_reciever:/opt/ros/humble /usr/bin/cmake --install /home/jcgg/robocol_ws/GcodeMaster/build/black_arm
+[3.574s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm' for CMake module files
+[3.574s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm' for CMake config files
+[3.574s] Level 1:colcon.colcon_core.shell:create_environment_hook('black_arm', 'cmake_prefix_path')
+[3.595s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/hook/cmake_prefix_path.ps1'
+[3.596s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/hook/cmake_prefix_path.dsv'
+[3.596s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/hook/cmake_prefix_path.sh'
+[3.596s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/bin'
+[3.597s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/lib/pkgconfig/black_arm.pc'
+[3.597s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/lib/python3.10/site-packages'
+[3.597s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/bin'
+[3.616s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.ps1'
+[3.617s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.dsv'
+[3.617s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.sh'
+[3.618s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.bash'
+[3.619s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.zsh'
+[3.619s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/colcon-core/packages/black_arm)
+[3.627s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/src/gcode_executor': PYTHONPATH=/home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor/prefix_override:/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/gcode_executor build --build-base /home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor/build install --record /home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor/install.log --single-version-externally-managed
+[3.631s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever': PYTHONPATH=/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/prefix_override:/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/btserial_reciever build --build-base /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build install --record /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/install.log --single-version-externally-managed
+[3.691s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(black_arm)
+[3.710s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm' for CMake module files
+[3.710s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm' for CMake config files
+[3.710s] Level 1:colcon.colcon_core.shell:create_environment_hook('black_arm', 'cmake_prefix_path')
+[3.729s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/hook/cmake_prefix_path.ps1'
+[3.730s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/hook/cmake_prefix_path.dsv'
+[3.730s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/hook/cmake_prefix_path.sh'
+[3.731s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/bin'
+[3.731s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/lib/pkgconfig/black_arm.pc'
+[3.731s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/lib/python3.10/site-packages'
+[3.731s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/bin'
+[3.750s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.ps1'
+[3.750s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.dsv'
+[3.751s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.sh'
+[3.751s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.bash'
+[3.751s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/black_arm/package.zsh'
+[3.752s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jcgg/robocol_ws/GcodeMaster/install/black_arm/share/colcon-core/packages/black_arm)
+[4.216s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/src/gcode_executor' returned '0': PYTHONPATH=/home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor/prefix_override:/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/gcode_executor build --build-base /home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor/build install --record /home/jcgg/robocol_ws/GcodeMaster/build/gcode_executor/install.log --single-version-externally-managed
+[4.235s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor' for CMake module files
+[4.235s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor' for CMake config files
+[4.236s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/lib'
+[4.236s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/bin'
+[4.236s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/lib/pkgconfig/gcode_executor.pc'
+[4.236s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/lib/python3.10/site-packages'
+[4.236s] Level 1:colcon.colcon_core.shell:create_environment_hook('gcode_executor', 'pythonpath')
+[4.266s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/hook/pythonpath.ps1'
+[4.266s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/hook/pythonpath.dsv'
+[4.266s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/hook/pythonpath.sh'
+[4.267s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/bin'
+[4.267s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(gcode_executor)
+[4.285s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/package.ps1'
+[4.285s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/package.dsv'
+[4.286s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/package.sh'
+[4.286s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/package.bash'
+[4.286s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/gcode_executor/package.zsh'
+[4.287s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jcgg/robocol_ws/GcodeMaster/install/gcode_executor/share/colcon-core/packages/gcode_executor)
+[4.288s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever' returned '0': PYTHONPATH=/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/prefix_override:/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/btserial_reciever build --build-base /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build install --record /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/install.log --single-version-externally-managed
+[4.308s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever' for CMake module files
+[4.309s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever' for CMake config files
+[4.309s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib'
+[4.309s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/bin'
+[4.309s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/pkgconfig/btserial_reciever.pc'
+[4.310s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages'
+[4.310s] Level 1:colcon.colcon_core.shell:create_environment_hook('btserial_reciever', 'pythonpath')
+[4.328s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/hook/pythonpath.ps1'
+[4.329s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/hook/pythonpath.dsv'
+[4.329s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/hook/pythonpath.sh'
+[4.329s] Level 1:colcon.colcon_core.environment:checking '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/bin'
+[4.329s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(btserial_reciever)
+[4.348s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/package.ps1'
+[4.349s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/package.dsv'
+[4.349s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/package.sh'
+[4.349s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/package.bash'
+[4.350s] INFO:colcon.colcon_core.shell:Creating package script '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/btserial_reciever/package.zsh'
+[4.350s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/share/colcon-core/packages/btserial_reciever)
+[4.350s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[4.351s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[4.351s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[4.351s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[4.375s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[4.375s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[4.375s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[4.387s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[4.406s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jcgg/robocol_ws/GcodeMaster/install/local_setup.ps1'
+[4.407s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/jcgg/robocol_ws/GcodeMaster/install/_local_setup_util_ps1.py'
+[4.408s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jcgg/robocol_ws/GcodeMaster/install/setup.ps1'
+[4.430s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jcgg/robocol_ws/GcodeMaster/install/local_setup.sh'
+[4.431s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/jcgg/robocol_ws/GcodeMaster/install/_local_setup_util_sh.py'
+[4.431s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jcgg/robocol_ws/GcodeMaster/install/setup.sh'
+[4.453s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jcgg/robocol_ws/GcodeMaster/install/local_setup.bash'
+[4.453s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jcgg/robocol_ws/GcodeMaster/install/setup.bash'
+[4.475s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jcgg/robocol_ws/GcodeMaster/install/local_setup.zsh'
+[4.475s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jcgg/robocol_ws/GcodeMaster/install/setup.zsh'

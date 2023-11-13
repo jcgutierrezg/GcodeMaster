@@ -1,0 +1,36 @@
+[1.529s] Invoking command in '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever': PYTHONPATH=/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/prefix_override:/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/btserial_reciever build --build-base /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build install --record /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/install.log --single-version-externally-managed
+[1.790s] running egg_info
+[1.808s] writing ../../build/btserial_reciever/btserial_reciever.egg-info/PKG-INFO
+[1.809s] writing dependency_links to ../../build/btserial_reciever/btserial_reciever.egg-info/dependency_links.txt
+[1.809s] writing entry points to ../../build/btserial_reciever/btserial_reciever.egg-info/entry_points.txt
+[1.809s] writing requirements to ../../build/btserial_reciever/btserial_reciever.egg-info/requires.txt
+[1.809s] writing top-level names to ../../build/btserial_reciever/btserial_reciever.egg-info/top_level.txt
+[1.848s] reading manifest file '../../build/btserial_reciever/btserial_reciever.egg-info/SOURCES.txt'
+[1.848s] adding license file 'LICENSE'
+[1.849s] writing manifest file '../../build/btserial_reciever/btserial_reciever.egg-info/SOURCES.txt'
+[1.849s] running build
+[1.849s] running build_py
+[1.850s] running install
+[1.850s] /home/jcgg/.local/lib/python3.10/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+[1.850s] !!
+[1.850s] 
+[1.850s]         ********************************************************************************
+[1.850s]         Please avoid running ``setup.py`` directly.
+[1.850s]         Instead, use pypa/build, pypa/installer or other
+[1.851s]         standards-based tools.
+[1.851s] 
+[1.851s]         See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+[1.851s]         ********************************************************************************
+[1.851s] 
+[1.851s] !!
+[1.851s]   self.initialize_options()
+[1.856s] running install_lib
+[1.876s] running install_data
+[1.895s] running install_egg_info
+[1.915s] removing '/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever-1.0.0-py3.10.egg-info' (and everything under it)
+[1.915s] Copying ../../build/btserial_reciever/btserial_reciever.egg-info to /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages/btserial_reciever-1.0.0-py3.10.egg-info
+[1.916s] running install_scripts
+[2.102s] Installing reciever script to /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/btserial_reciever
+[2.102s] Installing translate_quaternion script to /home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/btserial_reciever
+[2.103s] writing list of installed files to '/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/install.log'
+[2.187s] Invoked command in '/home/jcgg/robocol_ws/GcodeMaster/src/btserial_reciever' returned '0': PYTHONPATH=/home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/prefix_override:/home/jcgg/robocol_ws/GcodeMaster/install/btserial_reciever/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/btserial_reciever build --build-base /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/build install --record /home/jcgg/robocol_ws/GcodeMaster/build/btserial_reciever/install.log --single-version-externally-managed

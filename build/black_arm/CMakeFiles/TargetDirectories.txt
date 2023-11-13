@@ -1,0 +1,9 @@
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/uninstall.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/black_arm_uninstall.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/test.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/edit_cache.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/rebuild_cache.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/list_install_components.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/install.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/install/local.dir
+/home/jcgg/robocol_ws/GcodeMaster/build/black_arm/CMakeFiles/install/strip.dir

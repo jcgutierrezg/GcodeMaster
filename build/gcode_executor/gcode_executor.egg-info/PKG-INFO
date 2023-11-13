@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: gcode-executor
+Version: 1.0.0
+Summary: This package contains a custom made gcode file interpreter to send movement instructions to ROS2 in order to control Robocols arm
+Maintainer: Juan Camilo Gutierrez
+Maintainer-email: jc.gutierrezg@uniandes.edu.co
+License: TODO: License declaration

@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: btserial-reciever
+Version: 1.0.0
+Summary: This package contains a bluetooth serial reciever used to recieve messages from the RPGlove and send them to ROS2 to control Robocols arm
+Maintainer: Juan Camilo Gutierrez
+Maintainer-email: jc.gutierrezg@uniandes.edu.co
+License: TODO: License declaration
+License-File: LICENSE
