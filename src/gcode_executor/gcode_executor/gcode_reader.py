@@ -47,20 +47,27 @@ class Gcode_reader(Node):
     def __init__(self):
         super().__init__('gcode_reader')
 
+        self.sphereMode = False
+
         self.positioning = 'abs'
         self.positioningCount = 0
         self.units = 'mm'
         self.unitsCount = 0
 
-        self.xoffset = 0.5/2
+        self.xoffset = 0.4/2 + 0.1
         self.yoffset = -0.35
         self.zoffset = 0.5
+
+        self.sphere_radius = 0.2
+        self.sphereCoords = [self.xoffset-self.sphere_radius, -0.7, self.zoffset-self.sphere_radius]
 
         self.prevX = self.xoffset
         self.prevY = self.yoffset
         self.prevZ = self.zoffset
 
         self.moveFlag = False
+
+        self.startMoveFlag = False
 
         #filename = os.path.expanduser('~/Tesis_IMEC/gcodes/10mm_JUANaw.gcode')
 
@@ -85,7 +92,38 @@ class Gcode_reader(Node):
 
         self.get_logger().info('Waiting for gcode file selection...')
 
+    def normalize_vector(self, vector):
+        magnitude = np.linalg.norm(vector)
+        return vector / magnitude if magnitude != 0 else vector
+
+    def multiply_quaternions(self, q1, q2):
+        w1, x1, y1, z1 = q1
+        w2, x2, y2, z2 = q2
+
+        w = w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2
+        x = w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2
+        y = w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2
+        z = w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2
+
+        return np.array([w, x, y, z])
+
+    def calculate_orientation(self, normalized_normal_vector):
+        # Apply a -90° rotation around the Z-axis
+        offset_quaternion = np.array([np.cos(-np.pi / 4), 0, 0, np.sin(-np.pi / 4)])
+
+        # Calculate the quaternion from the normalized normal vector
+        angle = np.arccos(normalized_normal_vector[2])  # Assuming z is up
+        axis = np.cross(np.array([0, 0, 1]), normalized_normal_vector)
+        axis_normalized = self.normalize_vector(axis)
         
+        # Quaternion components
+        scalar_part = np.cos(angle / 2)
+        vector_part = np.sin(angle / 2) * axis_normalized
+        
+        # Combine the offset and calculated quaternion
+        quaternion = self.multiply_quaternions(offset_quaternion, np.concatenate(([scalar_part], vector_part)))
+
+        return quaternion
 
     def filestr_callback(self, msg):
 
@@ -215,23 +253,79 @@ class Gcode_reader(Node):
 
                 elif(result.get('G') == '1'):
 
-                    if(result.get('F') != None):
+                    if not self.sphereMode:
 
-                        speed = float(result.get('F'))/1000.0/60
+                        if(result.get('F') != None):
 
-                    if(result.get('X') != None):
-                        PosX = self.xoffset-float(result.get('X'))/1000.0
-                        yActual = self.prevY
+                            speed = float(result.get('F'))/1000.0/60
 
-                        self.moveFlag = True
-                    
-                    if(result.get('Y') != None):
-                        PosZ = self.zoffset+float(result.get('Y'))/1000.0
-                        yActual = self.prevY
+                        if(result.get('X') != None):
+                            PosX = self.xoffset-float(result.get('X'))/1000.0
+                            yActual = self.prevY
 
-                        self.moveFlag = True
+                            self.moveFlag = True
+                        
+                        if(result.get('Y') != None):
+                            PosZ = self.zoffset+float(result.get('Y'))/1000.0
+                            yActual = self.prevY
 
-                    moveType = 'line'
+                            self.moveFlag = True
+
+                        moveType = 'line'
+
+                    else:
+
+                        if not self.startMoveFlag:
+
+                            if(result.get('F') != None):
+
+                                speed = float(result.get('F'))/1000.0/60
+
+                            if(result.get('X') != None and result.get('Y') != None):
+
+                                PosX = self.xoffset-float(result.get('X'))/1000.0
+                            
+                                PosZ = self.zoffset+float(result.get('Y'))/1000.0
+                                #yActual = self.prevY
+
+                                yActual = math.sqrt((self.sphere_radius)**2 - (PosX-self.sphereCoords[0])**2 - (PosZ-self.sphereCoords[2])**2) + self.sphereCoords[1]
+
+                                self.get_logger().info('X: %f' % PosX)
+                                self.get_logger().info('Y: %f' % yActual)
+                                self.get_logger().info('Z: %f' % PosZ)
+
+                                self.moveFlag = True
+
+
+                            moveType = 'travel'
+
+                            self.startMoveFlag = True
+
+
+                        else:
+
+
+                            if(result.get('F') != None):
+
+                                speed = float(result.get('F'))/1000.0/60
+
+                            if(result.get('X') != None and result.get('Y') != None):
+
+                                PosX = self.xoffset-float(result.get('X'))/1000.0
+                            
+                                PosZ = self.zoffset+float(result.get('Y'))/1000.0
+                                #yActual = self.prevY
+
+                                yActual = math.sqrt(self.sphere_radius**2 - (PosX-self.sphereCoords[0])**2 - (PosZ-self.sphereCoords[2])**2) + self.sphereCoords[1]
+
+                                self.get_logger().info('X: %f' % PosX)
+                                self.get_logger().info('Y: %f' % yActual)
+                                self.get_logger().info('Z: %f' % PosZ)
+
+                                self.moveFlag = True
+
+
+                            moveType = 'arc'
 
                 elif(result.get('G') == '2'): #CW
 
@@ -298,7 +392,7 @@ class Gcode_reader(Node):
                     moveType = 'arc'
 
 
-                if(result.get('M') == '5'):
+                if(result.get('M') == '5' and not self.sphereMode):
 
                     laser = 0.0
                     yActual = self.yoffset
@@ -311,7 +405,7 @@ class Gcode_reader(Node):
 
                     moveType = 'line'
 
-                elif(result.get('M') == '3'):
+                elif(result.get('M') == '3' and not self.sphereMode):
 
                     laser = 1.0
 
@@ -327,13 +421,25 @@ class Gcode_reader(Node):
                 if(self.moveFlag):
                     #array_data = [X, Y, SPEED, ON/OFF, POWER]
 
-                    Roll = 0
-                    Pitch = 0
-                    Yaw = -90
+                    if (moveType == 'travel' or moveType == 'line' or (not self.sphereMode and moveType == 'arc')):
 
-                    quat = get_quaternion_from_euler(Roll, Pitch, Yaw)
+                        Roll = 0
+                        Pitch = 0
+                        Yaw = -90
 
-                    #self.array_data = [Xpos, Ypos, speed, laser, laserPower]
+                        quat = get_quaternion_from_euler(Roll, Pitch, Yaw)
+
+                        #self.array_data = [Xpos, Ypos, speed, laser, laserPower]
+
+                    elif(self.sphereMode and moveType == "arc"):
+
+                        normal_vector = np.array([PosX - self.sphereCoords[0], yActual - self.sphereCoords[1], PosZ - self.sphereCoords[2]])
+
+                        normalized_normal_vector = self.normalize_vector(normal_vector)
+
+                        quat = self.calculate_orientation(normalized_normal_vector)
+
+                        self.get_logger().info('Published Quat WXYZ: %s, %s, %s, %s' % (quat[0], quat[1], quat[2], quat[3]))
 
                     strmsg = String()
                     strmsg.data = moveType
@@ -358,21 +464,42 @@ class Gcode_reader(Node):
                     self.prevY = yActual
                     self.prevZ = PosZ
 
+
+
                     if(moveType == 'arc'):
 
-                        centermsg = Pose()
-            
-                        centermsg.position.x = centerX
-                        centermsg.position.y = yActual
-                        centermsg.position.z = centerZ
-                        centermsg.orientation.w = quat[0]
-                        centermsg.orientation.x = quat[1]
-                        centermsg.orientation.y = quat[2]
-                        centermsg.orientation.z = quat[3]
-                            
-                        self.pose_data.publish(centermsg)
+                        if not self.sphereMode:
 
-                        self.get_logger().info('Published Pose X: %s, %s, %s' % (centermsg.position.x, centermsg.position.y, centermsg.position.z))
+                            centermsg = Pose()
+                
+                            centermsg.position.x = centerX
+                            centermsg.position.y = yActual
+                            centermsg.position.z = centerZ
+                            centermsg.orientation.w = quat[0]
+                            centermsg.orientation.x = quat[1]
+                            centermsg.orientation.y = quat[2]
+                            centermsg.orientation.z = quat[3]
+                                
+                            self.pose_data.publish(centermsg)
+
+                            self.get_logger().info('Published Center X: %s, %s, %s' % (centermsg.position.x, centermsg.position.y, centermsg.position.z))
+
+                        else: 
+
+
+                            centermsg = Pose()
+                
+                            centermsg.position.x = self.sphereCoords[0]
+                            centermsg.position.y = self.sphereCoords[1]
+                            centermsg.position.z = self.sphereCoords[2]
+                            centermsg.orientation.w = quat[0]
+                            centermsg.orientation.x = quat[1]
+                            centermsg.orientation.y = quat[2]
+                            centermsg.orientation.z = quat[3]
+                                
+                            self.pose_data.publish(centermsg)
+
+                            self.get_logger().info('Published Center X: %s, %s, %s' % (centermsg.position.x, centermsg.position.y, centermsg.position.z))
 
                     # prevOriX = Roll
                     # prevOriY = Pitch

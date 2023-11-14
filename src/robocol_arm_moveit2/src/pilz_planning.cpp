@@ -5,6 +5,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <std_msgs/msg/bool.hpp>
+#include <std_msgs/msg/float32_multi_array.hpp>
 #include <geometry_msgs/msg/pose.hpp>
 // MoveIt libraries
 #include <moveit/move_group_interface/move_group_interface.h>
@@ -33,6 +34,11 @@ class PlanningNode : public rclcpp::Node {
       movetype_subscription_ = this->create_subscription<std_msgs::msg::String>(movetype_topic, 1, std::bind(&PlanningNode::set_movetype, this, _1));
       RCLCPP_INFO(this->get_logger(), "Subscribed to %s.", movetype_topic);
 
+      auto velocity_accel_topic = "robocol/arm/velocity_accel";
+      RCLCPP_INFO(this->get_logger(), "Subscribing to %s topic...", velocity_accel_topic);
+      velocity_accel_subscription_ = this->create_subscription<std_msgs::msg::Float32MultiArray>(velocity_accel_topic, 1, std::bind(&PlanningNode::set_velocity_accel, this, _1));
+      RCLCPP_INFO(this->get_logger(), "Subscribed to %s.", velocity_accel_topic);
+
       planning_publisher_ = this->create_publisher<std_msgs::msg::Bool>("/robocol/arm/planning_info", 10);
 
       // Create move_group ROS node
@@ -50,6 +56,9 @@ class PlanningNode : public rclcpp::Node {
       move_group_ptr_->setMaxVelocityScalingFactor(1.0);
       move_group_ptr_->setMaxAccelerationScalingFactor(0.2);
       move_group_ptr_->setPlanningTime(10.0);
+
+      velocity = 0.1;
+      accel = 0.1;
     }
 
     ~PlanningNode() {
@@ -61,6 +70,7 @@ class PlanningNode : public rclcpp::Node {
     rclcpp::Subscription<geometry_msgs::msg::Pose>::SharedPtr pose_subscription_;
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr plan_subscription_;
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr movetype_subscription_;
+    rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr velocity_accel_subscription_;
 
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr planning_publisher_;
 
@@ -74,6 +84,9 @@ class PlanningNode : public rclcpp::Node {
     moveit::planning_interface::MoveGroupInterface *move_group_ptr_;
     moveit::planning_interface::MoveGroupInterface::Plan planned_path;
     bool ok;
+
+    double velocity;
+    double accel;
 
 
     void set_action(const std_msgs::msg::String::SharedPtr msg) {
@@ -162,8 +175,8 @@ class PlanningNode : public rclcpp::Node {
         RCLCPP_INFO(this->get_logger(), "Changing planner to LIN");
         
         move_group_ptr_->setPlannerId("LIN");
-        move_group_ptr_->setMaxVelocityScalingFactor(0.1);
-        move_group_ptr_->setMaxAccelerationScalingFactor(0.1);
+        move_group_ptr_->setMaxVelocityScalingFactor(velocity);
+        move_group_ptr_->setMaxAccelerationScalingFactor(accel);
 
         circ_movement = false;
 
@@ -172,8 +185,8 @@ class PlanningNode : public rclcpp::Node {
         RCLCPP_INFO(this->get_logger(), "Changing planner to CIRC");
         
         move_group_ptr_->setPlannerId("CIRC");
-        move_group_ptr_->setMaxVelocityScalingFactor(0.1);
-        move_group_ptr_->setMaxAccelerationScalingFactor(0.1);
+        move_group_ptr_->setMaxVelocityScalingFactor(velocity);
+        move_group_ptr_->setMaxAccelerationScalingFactor(accel);
 
         circ_movement = true;
         center_flag = false;
@@ -230,6 +243,20 @@ class PlanningNode : public rclcpp::Node {
 
       }
 
+    }
+
+    void set_velocity_accel(const std_msgs::msg::Float32MultiArray::SharedPtr msg) {
+      //RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+      
+      velocity = msg->data[0];
+      accel = msg->data[1];
+
+      move_group_ptr_->setMaxVelocityScalingFactor(velocity);
+      move_group_ptr_->setMaxAccelerationScalingFactor(accel);
+
+      //RCLCPP_INFO(get_logger(), "Variable 1: %f", velocity);
+      //RCLCPP_INFO(get_logger(), "Variable 2: %f", accel);
+      
     }
 };
 

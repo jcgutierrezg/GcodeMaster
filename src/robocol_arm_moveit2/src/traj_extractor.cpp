@@ -44,21 +44,21 @@ class Plan2ArmNode : public rclcpp::Node {
 		int actual_trajectory;
 
 		void get_trajectory(const moveit_msgs::msg::DisplayTrajectory::SharedPtr msg) {
-			RCLCPP_INFO(this->get_logger(), "get_trajectory");
+			//RCLCPP_INFO(this->get_logger(), "get_trajectory");
 			joint_trajectory = msg->trajectory[0].joint_trajectory;
 			actual_trajectory = 0;
 			RCLCPP_INFO(this->get_logger(), "Number of trajectory points: '%d'",  (int)(std::size(joint_trajectory.points)));
 		}
 
 		void send_next_trajectory(const std_msgs::msg::Bool::SharedPtr msg) {
-			RCLCPP_INFO(this->get_logger(), "send_next_trajectory");
-			RCLCPP_INFO(this->get_logger(), "msg data: %d", msg->data);
+			//RCLCPP_INFO(this->get_logger(), "send_next_trajectory");
+			//RCLCPP_INFO(this->get_logger(), "msg data: %d", msg->data);
 			if (actual_trajectory < (int)std::size(joint_trajectory.points)) {
-				RCLCPP_INFO(this->get_logger(), "Actual trajectory: '%d'", actual_trajectory);
+				//RCLCPP_INFO(this->get_logger(), "Actual trajectory: '%d'", actual_trajectory);
 				auto pos = joint_trajectory.points[actual_trajectory].positions;
 				auto vel = joint_trajectory.points[actual_trajectory].velocities;
-				RCLCPP_INFO(this->get_logger(), "t%d: Angle_J1: %f, Angle_J2: %f, Angle_J3: %f, Angle_J4: %f, Angle_J5: %f, Angle_J6: %f", actual_trajectory, pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
-				RCLCPP_INFO(this->get_logger(), "t%d: Veloc_J1: %f, Veloc_J2: %f, Veloc_J3: %f, Veloc_J4: %f, Veloc_J5: %f, Veloc_J6: %f", actual_trajectory, vel[0], vel[1], vel[2], vel[3], vel[4], vel[5]);
+				//RCLCPP_INFO(this->get_logger(), "t%d: Angle_J1: %f, Angle_J2: %f, Angle_J3: %f, Angle_J4: %f, Angle_J5: %f, Angle_J6: %f", actual_trajectory, pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
+				//RCLCPP_INFO(this->get_logger(), "t%d: Veloc_J1: %f, Veloc_J2: %f, Veloc_J3: %f, Veloc_J4: %f, Veloc_J5: %f, Veloc_J6: %f", actual_trajectory, vel[0], vel[1], vel[2], vel[3], vel[4], vel[5]);
 				auto traj = std_msgs::msg::Float32MultiArray();
 
 				for (int i = 0; i < 6; ++i) {

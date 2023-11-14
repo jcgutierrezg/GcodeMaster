@@ -12,15 +12,11 @@ import threading
 import time
 from threading import Thread
 
-# Este codigo se suscribe al topico con mensaje tipo Twist de posicon
-# y grafica en tiempo real la posición del robot en un topico con 
-# mensaje tipo Image
-global height, width
-global poses_new, mapa, mapa_actual
-
 from std_msgs.msg import String
 from std_msgs.msg import Bool
+from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Pose
+
 
 from moveit_msgs.msg import PlanningScene
 from moveit_msgs.msg import DisplayTrajectory
@@ -299,18 +295,21 @@ class Gcode_interface(Node):
         print ("1mm")
         self.pos_resolution = 1.0/1000
         self.ori_resolution = 1.0
+        self.vel_resolution = 0.001
         pass
 
     def boton7(self):
         print ("10mm")
         self.pos_resolution = 10.0/1000
         self.ori_resolution = 10.0
+        self.vel_resolution = 0.01
         pass
 
     def boton8(self):
         print ("100mm")
         self.pos_resolution = 100.0/1000
         self.ori_resolution = 45.0
+        self.vel_resolution = 0.1
         pass
 
     def boton9(self):
@@ -472,6 +471,29 @@ class Gcode_interface(Node):
         self.finalExecute.publish(boolmsg)
         pass
 
+    def boton28(self):
+        print ("V +")
+        self.velocity += self.vel_resolution
+        self.accel += self.vel_resolution
+        self.update_values()
+        pass
+
+    def boton29(self):
+        print ("V -")
+        if(self.velocity - self.vel_resolution > 0.0):
+
+            self.velocity -= self.vel_resolution
+            self.accel -= self.vel_resolution
+            self.update_values()
+        pass
+
+    def boton30(self):
+        print ("Update V")
+        velmsg = Float32MultiArray()
+        velmsg.data = [self.velocity, self.accel]
+        self.velocityconfig.publish(velmsg)
+        pass
+
     def boton_debug(self):
         print ("Debug")
 
@@ -504,6 +526,7 @@ class Gcode_interface(Node):
         self.rolltext = 'R: '+str(round(self.roll, 3))
         self.pitchtext = 'P: '+str(round(self.pitch, 3))
         self.yawtext = 'Y: '+str(round(self.yaw, 3))
+        self.veltext = 'Velocity: '+str(round(self.velocity, 3))
 
         self.xvar.set(self.xpostext)
         self.yvar.set(self.ypostext)
@@ -511,6 +534,8 @@ class Gcode_interface(Node):
         self.rollvar.set(self.rolltext)
         self.pitchvar.set(self.pitchtext)
         self.yawvar.set(self.yawtext)
+        self.velvar.set(self.veltext)
+
 
         self.xpos_label.config(text=self.xvar.get())
         self.ypos_label.config(text=self.yvar.get())
@@ -518,6 +543,7 @@ class Gcode_interface(Node):
         self.roll_label.config(text=self.rollvar.get())
         self.pitch_label.config(text=self.pitchvar.get())
         self.yaw_label.config(text=self.yawvar.get())
+        self.velocity_label.config(text=self.velvar.get())
 
 
 
@@ -568,6 +594,7 @@ class Gcode_interface(Node):
 
         self.pos_resolution = 10.0/1000
         self.ori_resolution = 10.0
+        self.vel_resolution = 0.01
 
         self.cursorX = 0.0
         self.cursorY = 0.0
@@ -582,12 +609,17 @@ class Gcode_interface(Node):
 
         self.gcodetext = ' '
 
+        self.velocity = 0.1
+        self.accel = 0.1
+
         self.xpostext = 'X: '+str(round(self.pos_x, 3))
         self.ypostext = 'Y: '+str(round(self.pos_y, 3))
         self.zpostext = 'Z: '+str(round(self.pos_z, 3))
         self.rolltext = 'R: '+str(round(self.roll, 3))
         self.pitchtext = 'P: '+str(round(self.pitch, 3))
         self.yawtext = 'Y: '+str(round(self.yaw, 3))
+
+        self.veltext = 'Velocity: '+str(round(self.velocity, 3))
 
         self.gcodestring = self.create_subscription(String, 'robocol/arm/line_data' ,self.gcodestring_callback, 10)
 
@@ -604,6 +636,7 @@ class Gcode_interface(Node):
         self.move_type = self.create_publisher(String, 'robocol/arm/movetype', 10)
         self.filename = self.create_publisher(String, 'robocol/arm/filename', 10)
         self.finalExecute = self.create_publisher(Bool, 'robocol/arm/final_Execute', 10)
+        self.velocityconfig = self.create_publisher(Float32MultiArray, 'robocol/arm/velocity_accel', 10)
 
         #self.mapa_base =  255*np.ones((500,500),dtype=np.uint8)
         self.root = tk.Tk()
@@ -615,6 +648,9 @@ class Gcode_interface(Node):
 
         self.var = tk.StringVar()
         self.var.set("GCODE ACTUAL")
+
+        self.velvar = tk.StringVar()
+        self.velvar.set(self.veltext)
         #bg = tk.PhotoImage(file = "mapa_final.png")
         
         # Show image using label
@@ -800,7 +836,7 @@ class Gcode_interface(Node):
 
         ori_place_frame = tk.Frame(self.root)
         ori_place_frame.configure(bg=self.backgndColor)
-        ori_place_frame.place(x=350, y=510)
+        ori_place_frame.place(x=370, y=510)
 
         button9 = tk.Button(
             ori_place_frame,
@@ -1092,7 +1128,55 @@ class Gcode_interface(Node):
             command=self.boton27,
             cursor="hand2",
         )
-        button27.place(x=80, y=540)
+        button27.place(x=20, y=540)
+
+        button28 = tk.Button(
+            self.root,
+            text="V +",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=2,
+            height=1,
+            command=self.boton28,
+            cursor="hand2",
+        )
+        button28.place(x=190, y=530)
+
+        button29 = tk.Button(
+            self.root,
+            text="V -",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=2,
+            height=1,
+            command=self.boton29,
+            cursor="hand2",
+        )
+        button29.place(x=190, y=560)
+
+        self.velocity_label = tk.Label(self.root, text=self.velvar.get(), font=("Arial", 12), fg="white", bg=self.backgndColor)
+        self.velocity_label.place(x=270, y=510)
+
+        button30 = tk.Button(
+            self.root,
+            text="Update V",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=6,
+            height=2,
+            command=self.boton30,
+            cursor="hand2",
+        )
+        button30.place(x=270, y=550)
 
         button_debug = tk.Button(
             self.root,
