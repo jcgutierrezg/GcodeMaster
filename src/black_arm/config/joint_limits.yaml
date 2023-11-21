@@ -15,17 +15,17 @@ joint_limits:
     max_acceleration: 2.0
   robocol_joint2:
     has_velocity_limits: true
-    max_velocity: 0.67335
+    max_velocity: 0.336676
     has_acceleration_limits: true
     max_acceleration: 2.0
   robocol_joint3:
     has_velocity_limits: true
-    max_velocity: 0.67335
+    max_velocity: 0.33676
     has_acceleration_limits: true
     max_acceleration: 2.0
   robocol_joint4:
     has_velocity_limits: true
-    max_velocity: 2.453986
+    max_velocity: 1.30879
     has_acceleration_limits: true
     max_acceleration: 2.0
   robocol_joint5:
@@ -35,6 +35,6 @@ joint_limits:
     max_acceleration: 2.0
   robocol_joint6:
     has_velocity_limits: true
-    max_velocity: 2.453986
+    max_velocity: 1.30879
     has_acceleration_limits: true
     max_acceleration: 2.0

@@ -54,7 +54,7 @@ class PlanningNode : public rclcpp::Node {
 
       move_group_ptr_->setPlannerId("PTP");
       move_group_ptr_->setMaxVelocityScalingFactor(1.0);
-      move_group_ptr_->setMaxAccelerationScalingFactor(0.2);
+      move_group_ptr_->setMaxAccelerationScalingFactor(1.0);
       move_group_ptr_->setPlanningTime(10.0);
 
       velocity = 0.1;
@@ -166,7 +166,7 @@ class PlanningNode : public rclcpp::Node {
         
         move_group_ptr_->setPlannerId("PTP");
         move_group_ptr_->setMaxVelocityScalingFactor(1.0);
-        move_group_ptr_->setMaxAccelerationScalingFactor(0.2);
+        move_group_ptr_->setMaxAccelerationScalingFactor(1.0);
 
         circ_movement = false;
 
