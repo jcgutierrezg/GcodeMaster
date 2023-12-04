@@ -2,7 +2,7 @@
 
 initial_positions:
   robocol_joint1: 0.0
-  robocol_joint2: -1.57079
+  robocol_joint2: -1.5009768
   robocol_joint3: 1.91986
   robocol_joint4: 0.0
   robocol_joint5: -2.059488

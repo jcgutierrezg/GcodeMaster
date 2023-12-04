@@ -7,13 +7,11 @@ from rclpy.node import Node
 from std_msgs.msg import String
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Pose
+from std_msgs.msg import Float32MultiArray
 
 import numpy as np # Scientific computing library for Python
 import math
 
-
-#10mm_square2.gcode
-#MHammerRz_0004.gcode
 
 def get_quaternion_from_euler(roll, pitch, yaw):
   """
@@ -47,19 +45,19 @@ class Gcode_reader(Node):
     def __init__(self):
         super().__init__('gcode_reader')
 
-        self.sphereMode = False
+        self.cylinderMode = False
 
         self.positioning = 'abs'
         self.positioningCount = 0
         self.units = 'mm'
         self.unitsCount = 0
 
-        self.xoffset = 0.4/2 + 0.1
+        self.xoffset = 0.5/2
         self.yoffset = -0.35
         self.zoffset = 0.5
 
-        self.sphere_radius = 0.2
-        self.sphereCoords = [self.xoffset-self.sphere_radius, -0.7, self.zoffset-self.sphere_radius]
+        self.cylinder_radius = 0.2
+        self.cylinderCoords = [self.xoffset-self.cylinder_radius, -0.5, self.zoffset-self.cylinder_radius]
 
         self.prevX = self.xoffset
         self.prevY = self.yoffset
@@ -68,6 +66,11 @@ class Gcode_reader(Node):
         self.moveFlag = False
 
         self.startMoveFlag = False
+
+        self.A_plane = 0.0
+        self.B_plane = 1.0
+        self.C_plane = 0.0
+        self.D_plane = 0.0
 
         #filename = os.path.expanduser('~/Tesis_IMEC/gcodes/10mm_JUANaw.gcode')
 
@@ -85,6 +88,12 @@ class Gcode_reader(Node):
             String,
             'robocol/arm/filename',
             self.filestr_callback,
+            10)
+
+        self.plane_param = self.create_subscription(
+            Float32MultiArray,
+            'robocol/arm/plane_param',
+            self.calibrate_callback,
             10)
 
         self.nextline  # prevent unused variable warning
@@ -124,6 +133,17 @@ class Gcode_reader(Node):
         quaternion = self.multiply_quaternions(offset_quaternion, np.concatenate(([scalar_part], vector_part)))
 
         return quaternion
+
+    def project_onto_plane(self, x, y, z):
+
+        A = self.A_plane
+        B = self.B_plane
+        C = self.C_plane
+        D = self.D_plane
+
+        y_projected = (D - A*x - C*z) / B
+
+        return y_projected
 
     def filestr_callback(self, msg):
 
@@ -189,7 +209,7 @@ class Gcode_reader(Node):
 
         self.moveFlag = False
 
-        if(self.line_counter< self.gcode_length):
+        if(self.line_counter < self.gcode_length):
 
             while(not self.moveFlag):
 
@@ -253,7 +273,7 @@ class Gcode_reader(Node):
 
                 elif(result.get('G') == '1'):
 
-                    if not self.sphereMode:
+                    if not self.cylinderMode:
 
                         if(result.get('F') != None):
 
@@ -288,7 +308,7 @@ class Gcode_reader(Node):
                                 PosZ = self.zoffset+float(result.get('Y'))/1000.0
                                 #yActual = self.prevY
 
-                                yActual = math.sqrt((self.sphere_radius)**2 - (PosX-self.sphereCoords[0])**2 - (PosZ-self.sphereCoords[2])**2) + self.sphereCoords[1]
+                                yActual = math.sqrt((self.cylinder_radius)**2 - (PosX-self.cylinderCoords[0])**2) + self.cylinderCoords[1]
 
                                 self.get_logger().info('X: %f' % PosX)
                                 self.get_logger().info('Y: %f' % yActual)
@@ -316,7 +336,7 @@ class Gcode_reader(Node):
                                 PosZ = self.zoffset+float(result.get('Y'))/1000.0
                                 #yActual = self.prevY
 
-                                yActual = math.sqrt(self.sphere_radius**2 - (PosX-self.sphereCoords[0])**2 - (PosZ-self.sphereCoords[2])**2) + self.sphereCoords[1]
+                                yActual = math.sqrt((self.cylinder_radius)**2 - (PosX-self.cylinderCoords[0])**2) + self.cylinderCoords[1]
 
                                 self.get_logger().info('X: %f' % PosX)
                                 self.get_logger().info('Y: %f' % yActual)
@@ -392,7 +412,7 @@ class Gcode_reader(Node):
                     moveType = 'arc'
 
 
-                if(result.get('M') == '5' and not self.sphereMode):
+                if(result.get('M') == '5' and not self.cylinderMode):
 
                     laser = 0.0
                     yActual = self.yoffset
@@ -405,7 +425,7 @@ class Gcode_reader(Node):
 
                     moveType = 'line'
 
-                elif(result.get('M') == '3' and not self.sphereMode):
+                elif(result.get('M') == '3' and not self.cylinderMode):
 
                     laser = 1.0
 
@@ -421,7 +441,7 @@ class Gcode_reader(Node):
                 if(self.moveFlag):
                     #array_data = [X, Y, SPEED, ON/OFF, POWER]
 
-                    if (moveType == 'travel' or moveType == 'line' or (not self.sphereMode and moveType == 'arc')):
+                    if (moveType == 'travel' or moveType == 'line' or (not self.cylinderMode and moveType == 'arc')):
 
                         Roll = 0
                         Pitch = 0
@@ -431,9 +451,9 @@ class Gcode_reader(Node):
 
                         #self.array_data = [Xpos, Ypos, speed, laser, laserPower]
 
-                    elif(self.sphereMode and moveType == "arc"):
+                    elif(self.cylinderMode and moveType == "arc"):
 
-                        normal_vector = np.array([PosX - self.sphereCoords[0], yActual - self.sphereCoords[1], PosZ - self.sphereCoords[2]])
+                        normal_vector = np.array([PosX - self.cylinderCoords[0], yActual - self.cylinderCoords[1], 0.0])
 
                         normalized_normal_vector = self.normalize_vector(normal_vector)
 
@@ -446,10 +466,18 @@ class Gcode_reader(Node):
                     self.string_data.publish(strmsg)
                     self.get_logger().info('Published string: %s' % strmsg.data)
 
+                    if(not self.cylinderMode):
+
+                        y_new = self.project_onto_plane(PosX, yActual, PosZ)
+
+                    else:
+
+                        y_new = yActual
+
                     posemsg = Pose()
             
                     posemsg.position.x = PosX
-                    posemsg.position.y = yActual
+                    posemsg.position.y = y_new
                     posemsg.position.z = PosZ
                     posemsg.orientation.w = quat[0]
                     posemsg.orientation.x = quat[1]
@@ -468,7 +496,7 @@ class Gcode_reader(Node):
 
                     if(moveType == 'arc'):
 
-                        if not self.sphereMode:
+                        if not self.cylinderMode:
 
                             centermsg = Pose()
                 
@@ -489,9 +517,9 @@ class Gcode_reader(Node):
 
                             centermsg = Pose()
                 
-                            centermsg.position.x = self.sphereCoords[0]
-                            centermsg.position.y = self.sphereCoords[1]
-                            centermsg.position.z = self.sphereCoords[2]
+                            centermsg.position.x = self.cylinderCoords[0]
+                            centermsg.position.y = self.cylinderCoords[1]
+                            centermsg.position.z = PosZ
                             centermsg.orientation.w = quat[0]
                             centermsg.orientation.x = quat[1]
                             centermsg.orientation.y = quat[2]
@@ -521,6 +549,15 @@ class Gcode_reader(Node):
 
             self.destroy_node()
             rclpy.shutdown()
+
+    def calibrate_callback(self, msg):
+
+        self.A_plane = msg.data[0]
+        self.B_plane = msg.data[1]
+        self.C_plane = msg.data[2]
+        self.D_plane = msg.data[3]
+
+
 
 
 def main(args=None):

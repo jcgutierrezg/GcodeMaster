@@ -15,6 +15,7 @@ from threading import Thread
 from std_msgs.msg import String
 from std_msgs.msg import Bool
 from std_msgs.msg import Float32MultiArray
+    
 from geometry_msgs.msg import Pose
 
 
@@ -196,16 +197,31 @@ class Gcode_interface(Node):
         elif line.startswith("M3"):
             self.drawing = True
 
+
+    def define_plane(self, p1, p2, p3):
+
+        v1 = np.array([p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]])
+        v2 = np.array([p3[0] - p1[0], p3[1] - p1[1], p3[2] - p1[2]])
+
+        n = np.cross(v1, v2)
+        n /= np.linalg.norm(n)
+
+        # Define the plane equation: Ax + By + Cz = D
+        A, B, C = n
+        D = np.dot(n, p1)
+
+        self.A_plane = A
+        self.B_plane = B
+        self.C_plane = C
+        self.D_plane = D
+
+
     def boton1(self):
-        #t.forward(1)
-        #thread = threading.Thread(target=rclpy.spin(self))
-        #thread.start()
-        #self.t.pencolor("red")
-        #self.t.pensize(2)
+
         print ("Boton1")
         gcode_filename = filedialog.askopenfilename(initialdir='~/Tesis_IMEC/gcodes/')
         print(gcode_filename)
-        self.gcodetext = filename = os.path.basename(gcode_filename)
+        self.gcodetext = os.path.basename(gcode_filename)
 
         text_label = tk.Label(self.root, text=self.gcodetext, font=("Arial", 16), fg="white", bg=self.backgndColor)
         text_label.place(x=50, y=50)
@@ -494,6 +510,84 @@ class Gcode_interface(Node):
         self.velocityconfig.publish(velmsg)
         pass
 
+    def boton31(self):
+        print ("Next Calibration")
+
+        strmsg = String()
+        strmsg.data = "line"
+        self.move_type.publish(strmsg)
+
+        if(self.calibrate_counter == 0):
+
+            self.pos_x = self.calibratePoint1[0]
+            self.pos_y = self.calibratePoint1[1]
+            self.pos_z = self.calibratePoint1[2]
+
+        elif(self.calibrate_counter == 1):
+
+            self.pos_x = self.calibratePoint2[0]
+            self.pos_y = self.calibratePoint2[1]
+            self.pos_z = self.calibratePoint2[2]
+
+        elif(self.calibrate_counter == 2):
+
+            self.pos_x = self.calibratePoint3[0]
+            self.pos_y = self.calibratePoint3[1]
+            self.pos_z = self.calibratePoint3[2]
+
+        elif(self.calibrate_counter == 3):
+
+            self.pos_x = self.homepos_x
+            self.pos_y = self.homepos_y - 0.05
+            self.pos_z = self.homepos_z
+
+            self.define_plane(self.calibratePoint1, self.calibratePoint2, self.calibratePoint3)
+
+            paramsg = Float32MultiArray()
+
+            paramsg.data = [self.A_plane, self.B_plane, self.C_plane, self.D_plane]
+
+            self.plane_param.publish(paramsg)
+
+            self.calibrate_counter = 0
+            self.button1['state'] = 'normal'
+
+
+        posemsg = Pose()
+            
+        posemsg.position.x = self.pos_x
+        posemsg.position.y = self.pos_y
+        posemsg.position.z = self.pos_z
+        posemsg.orientation.w = self.ori_w
+        posemsg.orientation.x = self.ori_x
+        posemsg.orientation.y = self.ori_y
+        posemsg.orientation.z = self.ori_z
+            
+        self.manual_pose.publish(posemsg)
+
+        self.update_values()
+
+        pass
+
+    def boton32(self):
+        print ("Save point")
+        
+        if(self.calibrate_counter == 0):
+
+            self.calibratePoint1[1] = self.pos_y
+
+        elif(self.calibrate_counter == 1):
+
+            self.calibratePoint2[1] = self.pos_y
+
+        elif(self.calibrate_counter == 2):
+
+            self.calibratePoint3[1] = self.pos_y
+
+        self.calibrate_counter += 1
+
+        pass
+
     def boton_debug(self):
         print ("Debug")
 
@@ -612,6 +706,17 @@ class Gcode_interface(Node):
         self.velocity = 0.1
         self.accel = 0.1
 
+        self.calibrate_counter = 0
+
+        self.calibratePoint1 = [self.homepos_x, self.homepos_y - 0.05, self.homepos_z]
+        self.calibratePoint2 = [self.homepos_x - 0.5, self.homepos_y - 0.05, self.homepos_z]
+        self.calibratePoint3 = [self.homepos_x - 0.5, self.homepos_y - 0.05, self.homepos_z - 0.5]
+
+        self.A_plane = 0.0
+        self.B_plane = 0.0
+        self.C_plane = 0.0
+        self.D_plane = 0.0
+
         self.xpostext = 'X: '+str(round(self.pos_x, 3))
         self.ypostext = 'Y: '+str(round(self.pos_y, 3))
         self.zpostext = 'Z: '+str(round(self.pos_z, 3))
@@ -637,6 +742,7 @@ class Gcode_interface(Node):
         self.filename = self.create_publisher(String, 'robocol/arm/filename', 10)
         self.finalExecute = self.create_publisher(Bool, 'robocol/arm/final_Execute', 10)
         self.velocityconfig = self.create_publisher(Float32MultiArray, 'robocol/arm/velocity_accel', 10)
+        self.plane_param = self.create_publisher(Float32MultiArray, 'robocol/arm/plane_param', 10)
 
         #self.mapa_base =  255*np.ones((500,500),dtype=np.uint8)
         self.root = tk.Tk()
@@ -657,7 +763,7 @@ class Gcode_interface(Node):
         #label1 = Label( root, image = bg)
         #label1.place(x = 0, y = 0)
 
-        button1 = tk.Button(
+        self.button1 = tk.Button(
             self.root,
             text="Seleccionar Gcode",
             font=("Arial", 12),
@@ -670,7 +776,7 @@ class Gcode_interface(Node):
             command=self.boton1,
             cursor="hand2",
         )
-        button1.place(x=60, y=10)
+        self.button1.place(x=60, y=10)
 
         button2 = tk.Button(
             self.root,
@@ -751,37 +857,37 @@ class Gcode_interface(Node):
         self.button5a.place(x=20, y=200)
 
         text_label = tk.Label(self.root, text='Manual Pose', font=("Arial", 16, "bold"), fg="white", bg=self.backgndColor)
-        text_label.place(x=80, y=270)
+        text_label.place(x=30, y=270)
 
         self.xvar = tk.StringVar()
         self.xvar.set(self.xpostext)
         self.xpos_label = tk.Label(self.root, text=self.xvar.get(), font=("Arial", 13, "bold"), fg=self.redColor, bg=self.backgndColor)
-        self.xpos_label.place(x=50, y=300)
+        self.xpos_label.place(x=20, y=300)
 
         self.yvar = tk.StringVar()
         self.yvar.set(self.ypostext)
         self.ypos_label = tk.Label(self.root, text=self.yvar.get(), font=("Arial", 13, "bold"), fg=self.greenColor, bg=self.backgndColor)
-        self.ypos_label.place(x=50, y=330)
+        self.ypos_label.place(x=20, y=330)
 
         self.zvar = tk.StringVar()
         self.zvar.set(self.zpostext)
         self.zpos_label = tk.Label(self.root, text=self.zvar.get(), font=("Arial", 13, "bold"), fg=self.blueColor, bg=self.backgndColor)
-        self.zpos_label.place(x=50, y=360)
+        self.zpos_label.place(x=20, y=360)
 
         self.rollvar = tk.StringVar()
         self.rollvar.set(self.rolltext)
         self.roll_label = tk.Label(self.root, text=self.rollvar.get(), font=("Arial", 13, "bold"), fg=self.redColor, bg=self.backgndColor)
-        self.roll_label.place(x=170, y=300)
+        self.roll_label.place(x=100, y=300)
 
         self.pitchvar = tk.StringVar()
         self.pitchvar.set(self.pitchtext)
         self.pitch_label = tk.Label(self.root, text=self.pitchvar.get(), font=("Arial", 13, "bold"), fg=self.greenColor, bg=self.backgndColor)
-        self.pitch_label.place(x=170, y=330)
+        self.pitch_label.place(x=100, y=330)
 
         self.yawvar = tk.StringVar()
         self.yawvar.set(self.yawtext)
         self.yaw_label = tk.Label(self.root, text=self.yawvar.get(), font=("Arial", 13, "bold"), fg=self.blueColor, bg=self.backgndColor)
-        self.yaw_label.place(x=170, y=360)
+        self.yaw_label.place(x=100, y=360)
 
         res_label = tk.Label(self.root, text='Resolution', font=("Arial", 13, "bold"), fg="white", bg=self.backgndColor)
         res_label.place(x=100, y=600)
@@ -1178,6 +1284,36 @@ class Gcode_interface(Node):
         )
         button30.place(x=270, y=550)
 
+        button31 = tk.Button(
+            self.root,
+            text="Next Calibration",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=6,
+            height=2,
+            command=self.boton31,
+            cursor="hand2",
+        )
+        button31.place(x=200, y=270)
+
+        button32 = tk.Button(
+            self.root,
+            text="Save Point",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=6,
+            height=2,
+            command=self.boton32,
+            cursor="hand2",
+        )
+        button32.place(x=200, y=330)
+
         button_debug = tk.Button(
             self.root,
             text="Debug",
@@ -1206,6 +1342,9 @@ class Gcode_interface(Node):
         #self.canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color)
 
         #print ("minimal_subscriber_publisher")
+
+        self.button1['state'] = 'disabled'
+
         self.root.mainloop()
 
     def gcodestring_callback(self, msg):
