@@ -312,6 +312,11 @@ class Gcode_interface(Node):
         self.pos_resolution = 1.0/1000
         self.ori_resolution = 1.0
         self.vel_resolution = 0.001
+        self.manual_resolution = 0.1
+
+        self.button7['bg'] = self.buttonColor
+        self.button6['bg'] = self.blueColor
+        self.button8['bg'] = self.buttonColor
         pass
 
     def boton7(self):
@@ -319,6 +324,11 @@ class Gcode_interface(Node):
         self.pos_resolution = 10.0/1000
         self.ori_resolution = 10.0
         self.vel_resolution = 0.01
+        self.manual_resolution = 1.0
+
+        self.button7['bg'] = self.blueColor
+        self.button6['bg'] = self.buttonColor
+        self.button8['bg'] = self.buttonColor
         pass
 
     def boton8(self):
@@ -326,6 +336,11 @@ class Gcode_interface(Node):
         self.pos_resolution = 100.0/1000
         self.ori_resolution = 45.0
         self.vel_resolution = 0.1
+        self.manual_resolution = 10.0
+
+        self.button7['bg'] = self.buttonColor
+        self.button6['bg'] = self.buttonColor
+        self.button8['bg'] = self.blueColor
         pass
 
     def boton9(self):
@@ -482,9 +497,38 @@ class Gcode_interface(Node):
 
     def boton27(self):
         print ("ARM EXECUTE")
-        boolmsg = Bool()
-        boolmsg.data = True
-        self.finalExecute.publish(boolmsg)
+
+        anglemsg = Float32MultiArray()
+
+        anglemsg.data.append(self.motor1_angle)
+        anglemsg.data.append(self.motor2_angle)
+        anglemsg.data.append(self.motor3_angle)
+        anglemsg.data.append(self.motor4_angle)
+        anglemsg.data.append(self.motor5_angle)
+        anglemsg.data.append(self.motor6_angle)
+
+        anglemsg.data.append(self.gripper1_angle)
+        anglemsg.data.append(self.gripper2_angle)
+
+        self.manual_angles.publish(anglemsg)
+
+        if(self.motor1_angle == 0.0 and self.motor2_angle == 0.0 and self.motor3_angle == 0.0 and self.motor4_angle == 0.0 and self.motor5_angle == 0.0 and self.motor6_angle == 0.0):
+
+            boolmsg = Bool()
+            boolmsg.data = True
+            self.finalExecute.publish(boolmsg)
+
+        else:
+
+            self.motor1_angle = 0.0
+            self.motor2_angle = 0.0
+            self.motor3_angle = 0.0
+            self.motor4_angle = 0.0
+            self.motor5_angle = 0.0
+            self.motor6_angle = 0.0
+
+            self.update_values()
+
         pass
 
     def boton28(self):
@@ -496,7 +540,7 @@ class Gcode_interface(Node):
 
     def boton29(self):
         print ("V -")
-        if(self.velocity - self.vel_resolution > 0.0):
+        if((self.velocity - self.vel_resolution) > 0.0):
 
             self.velocity -= self.vel_resolution
             self.accel -= self.vel_resolution
@@ -588,6 +632,118 @@ class Gcode_interface(Node):
 
         pass
 
+    def boton33(self):
+        print ("M1+")
+        self.motor1_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton34(self):
+        print ("M1-")
+        self.motor1_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton35(self):
+        print ("M2+")
+        self.motor2_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton36(self):
+        print ("M2-")
+        self.motor2_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton37(self):
+        print ("M3+")
+        self.motor3_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton38(self):
+        print ("M3-")
+        self.motor3_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton39(self):
+        print ("M4+")
+        self.motor4_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton40(self):
+        print ("M4-")
+        self.motor4_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton41(self):
+        print ("M5+")
+        self.motor5_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton42(self):
+        print ("M5-")
+        self.motor5_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton43(self):
+        print ("M6+")
+        self.motor6_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton44(self):
+        print ("M6-")
+        self.motor6_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton45(self):
+        print ("G1+")
+        self.gripper1_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton46(self):
+        print ("G1-")
+        self.gripper1_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton47(self):
+        print ("G2+")
+        self.gripper2_angle += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton48(self):
+        print ("G2-")
+        self.gripper2_angle -= self.manual_resolution
+
+        self.update_values()
+        pass
+
     def boton_debug(self):
         print ("Debug")
 
@@ -614,13 +770,24 @@ class Gcode_interface(Node):
 
     def update_values(self):
 
-        self.xpostext = 'X: '+str(round(self.pos_x, 3))
-        self.ypostext = 'Y: '+str(round(self.pos_y, 3))
-        self.zpostext = 'Z: '+str(round(self.pos_z, 3))
-        self.rolltext = 'R: '+str(round(self.roll, 3))
-        self.pitchtext = 'P: '+str(round(self.pitch, 3))
-        self.yawtext = 'Y: '+str(round(self.yaw, 3))
-        self.veltext = 'Velocity: '+str(round(self.velocity, 3))
+        self.xpostext = 'X: '+str(round(self.pos_x, 3)) + 'm'
+        self.ypostext = 'Y: '+str(round(self.pos_y, 3)) + 'm'
+        self.zpostext = 'Z: '+str(round(self.pos_z, 3)) + 'm'
+        self.rolltext = 'R: '+str(round(self.roll, 3)) + '°'
+        self.pitchtext = 'P: '+str(round(self.pitch, 3)) + '°'
+        self.yawtext = 'Y: '+str(round(self.yaw, 3)) + '°'
+
+        self.veltext = 'Velocity: '+str(round(self.velocity, 5))
+
+        self.motor1_text = 'M1: ' + str(round(self.motor1_angle, 3)) + '°'
+        self.motor2_text = 'M2: ' + str(round(self.motor2_angle, 3)) + '°'
+        self.motor3_text = 'M3: ' + str(round(self.motor3_angle, 3)) + '°'
+        self.motor4_text = 'M4: ' + str(round(self.motor4_angle, 3)) + '°'
+        self.motor5_text = 'M5: ' + str(round(self.motor5_angle, 3)) + '°'
+        self.motor6_text = 'M6: ' + str(round(self.motor6_angle, 3)) + '°'
+
+        self.gripper1_text = 'G1: ' + str(round(self.gripper1_angle, 3)) + '°'
+        self.gripper2_text = 'G2: ' + str(round(self.gripper2_angle, 3)) + '°'
 
         self.xvar.set(self.xpostext)
         self.yvar.set(self.ypostext)
@@ -628,7 +795,18 @@ class Gcode_interface(Node):
         self.rollvar.set(self.rolltext)
         self.pitchvar.set(self.pitchtext)
         self.yawvar.set(self.yawtext)
+
         self.velvar.set(self.veltext)
+
+        self.m1var.set(self.motor1_text)
+        self.m2var.set(self.motor2_text)
+        self.m3var.set(self.motor3_text)
+        self.m4var.set(self.motor4_text)
+        self.m5var.set(self.motor5_text)
+        self.m6var.set(self.motor6_text)
+
+        self.g1var.set(self.gripper1_text)
+        self.g2var.set(self.gripper2_text)
 
 
         self.xpos_label.config(text=self.xvar.get())
@@ -637,7 +815,18 @@ class Gcode_interface(Node):
         self.roll_label.config(text=self.rollvar.get())
         self.pitch_label.config(text=self.pitchvar.get())
         self.yaw_label.config(text=self.yawvar.get())
+
         self.velocity_label.config(text=self.velvar.get())
+
+        self.m1_label.config(text=self.m1var.get())
+        self.m2_label.config(text=self.m2var.get())
+        self.m3_label.config(text=self.m3var.get())
+        self.m4_label.config(text=self.m4var.get())
+        self.m5_label.config(text=self.m5var.get())
+        self.m6_label.config(text=self.m6var.get())
+
+        self.g1_label.config(text=self.g1var.get())
+        self.g2_label.config(text=self.g2var.get())
 
 
 
@@ -689,6 +878,7 @@ class Gcode_interface(Node):
         self.pos_resolution = 10.0/1000
         self.ori_resolution = 10.0
         self.vel_resolution = 0.01
+        self.manual_resolution = 1.0
 
         self.cursorX = 0.0
         self.cursorY = 0.0
@@ -717,14 +907,34 @@ class Gcode_interface(Node):
         self.C_plane = 0.0
         self.D_plane = 0.0
 
-        self.xpostext = 'X: '+str(round(self.pos_x, 3))
-        self.ypostext = 'Y: '+str(round(self.pos_y, 3))
-        self.zpostext = 'Z: '+str(round(self.pos_z, 3))
-        self.rolltext = 'R: '+str(round(self.roll, 3))
-        self.pitchtext = 'P: '+str(round(self.pitch, 3))
-        self.yawtext = 'Y: '+str(round(self.yaw, 3))
+        self.xpostext = 'X: ' + str(round(self.pos_x, 3)) + 'm'
+        self.ypostext = 'Y: ' + str(round(self.pos_y, 3)) + 'm'
+        self.zpostext = 'Z: ' + str(round(self.pos_z, 3)) + 'm'
+        self.rolltext = 'R: ' + str(round(self.roll, 3)) + '°'
+        self.pitchtext = 'P: ' + str(round(self.pitch, 3)) + '°'
+        self.yawtext = 'Y: ' + str(round(self.yaw, 3)) + '°'
 
-        self.veltext = 'Velocity: '+str(round(self.velocity, 3))
+        self.motor1_angle = 0.0
+        self.motor2_angle = 0.0
+        self.motor3_angle = 0.0
+        self.motor4_angle = 0.0
+        self.motor5_angle = 0.0
+        self.motor6_angle = 0.0
+
+        self.gripper1_angle = 90.0
+        self.gripper2_angle = 90.0
+
+        self.motor1_text = 'M1: ' + str(round(self.motor1_angle, 3)) + '°'
+        self.motor2_text = 'M2: ' + str(round(self.motor2_angle, 3)) + '°'
+        self.motor3_text = 'M3: ' + str(round(self.motor3_angle, 3)) + '°'
+        self.motor4_text = 'M4: ' + str(round(self.motor4_angle, 3)) + '°'
+        self.motor5_text = 'M5: ' + str(round(self.motor5_angle, 3)) + '°'
+        self.motor6_text = 'M6: ' + str(round(self.motor6_angle, 3)) + '°'
+
+        self.gripper1_text = 'G1: ' + str(round(self.gripper1_angle, 3)) + '°'
+        self.gripper2_text = 'G2: ' + str(round(self.gripper2_angle, 3)) + '°'
+
+        self.veltext = 'Velocity: '+str(round(self.velocity, 5))
 
         self.gcodestring = self.create_subscription(String, 'robocol/arm/line_data' ,self.gcodestring_callback, 10)
 
@@ -743,6 +953,7 @@ class Gcode_interface(Node):
         self.finalExecute = self.create_publisher(Bool, 'robocol/arm/final_Execute', 10)
         self.velocityconfig = self.create_publisher(Float32MultiArray, 'robocol/arm/velocity_accel', 10)
         self.plane_param = self.create_publisher(Float32MultiArray, 'robocol/arm/plane_param', 10)
+        self.manual_angles = self.create_publisher(Float32MultiArray, 'robocol/arm/manual_angles', 10)
 
         #self.mapa_base =  255*np.ones((500,500),dtype=np.uint8)
         self.root = tk.Tk()
@@ -778,7 +989,7 @@ class Gcode_interface(Node):
         )
         self.button1.place(x=60, y=10)
 
-        button2 = tk.Button(
+        self.button2 = tk.Button(
             self.root,
             text="Auto",
             font=("Arial", 12),
@@ -791,7 +1002,7 @@ class Gcode_interface(Node):
             command=self.boton2,
             cursor="hand2",
         )
-        button2.place(x=30, y=100)
+        self.button2.place(x=30, y=100)
 
         self.button3 = tk.Button(
             self.root,
@@ -877,22 +1088,22 @@ class Gcode_interface(Node):
         self.rollvar = tk.StringVar()
         self.rollvar.set(self.rolltext)
         self.roll_label = tk.Label(self.root, text=self.rollvar.get(), font=("Arial", 13, "bold"), fg=self.redColor, bg=self.backgndColor)
-        self.roll_label.place(x=100, y=300)
+        self.roll_label.place(x=120, y=300)
 
         self.pitchvar = tk.StringVar()
         self.pitchvar.set(self.pitchtext)
         self.pitch_label = tk.Label(self.root, text=self.pitchvar.get(), font=("Arial", 13, "bold"), fg=self.greenColor, bg=self.backgndColor)
-        self.pitch_label.place(x=100, y=330)
+        self.pitch_label.place(x=120, y=330)
 
         self.yawvar = tk.StringVar()
         self.yawvar.set(self.yawtext)
         self.yaw_label = tk.Label(self.root, text=self.yawvar.get(), font=("Arial", 13, "bold"), fg=self.blueColor, bg=self.backgndColor)
-        self.yaw_label.place(x=100, y=360)
+        self.yaw_label.place(x=120, y=360)
 
         res_label = tk.Label(self.root, text='Resolution', font=("Arial", 13, "bold"), fg="white", bg=self.backgndColor)
         res_label.place(x=100, y=600)
 
-        button6 = tk.Button(
+        self.button6 = tk.Button(
             self.root,
             text="1mm/1°",
             font=("Arial", 12),
@@ -905,14 +1116,14 @@ class Gcode_interface(Node):
             command=self.boton6,
             cursor="hand2",
         )
-        button6.place(x=10, y=630)
+        self.button6.place(x=10, y=630)
 
-        button7 = tk.Button(
+        self.button7 = tk.Button(
             self.root,
             text="10mm/10°",
             font=("Arial", 12),
             fg=self.butTextColor,
-            bg=self.buttonColor,
+            bg=self.blueColor,
             borderwidth=2,
             relief="raised",
             width=6,
@@ -920,9 +1131,9 @@ class Gcode_interface(Node):
             command=self.boton7,
             cursor="hand2",
         )
-        button7.place(x=110, y=630)
+        self.button7.place(x=110, y=630)
 
-        button8 = tk.Button(
+        self.button8 = tk.Button(
             self.root,
             text="100mm/45°",
             font=("Arial", 12),
@@ -935,7 +1146,7 @@ class Gcode_interface(Node):
             command=self.boton8,
             cursor="hand2",
         )
-        button8.place(x=210, y=630)
+        self.button8.place(x=210, y=630)
 
         #ori_label = tk.Label(self.root, text='Orientation', font=("Arial", 14), fg="white", bg=self.backgndColor)
         #ori_label.place(x=350, y=500)
@@ -944,7 +1155,7 @@ class Gcode_interface(Node):
         ori_place_frame.configure(bg=self.backgndColor)
         ori_place_frame.place(x=370, y=510)
 
-        button9 = tk.Button(
+        self.button9 = tk.Button(
             ori_place_frame,
             text="Home",
             font=("Arial", 12),
@@ -957,9 +1168,9 @@ class Gcode_interface(Node):
             command=self.boton9,
             cursor="hand2",
         )
-        button9.grid(row=2, column=2, padx=5, pady=5)
+        self.button9.grid(row=2, column=2, padx=5, pady=5)
 
-        button10 = tk.Button(
+        self.button10 = tk.Button(
             ori_place_frame,
             text="Pitch-",
             font=("Arial", 12),
@@ -972,9 +1183,9 @@ class Gcode_interface(Node):
             command=self.boton10,
             cursor="hand2",
         )
-        button10.grid(row=1, column=2, pady=5)
+        self.button10.grid(row=1, column=2, pady=5)
 
-        button11 = tk.Button(
+        self.button11 = tk.Button(
             ori_place_frame,
             text="Pitch+",
             font=("Arial", 12),
@@ -987,9 +1198,9 @@ class Gcode_interface(Node):
             command=self.boton11,
             cursor="hand2",
         )
-        button11.grid(row=3, column=2, pady=5)
+        self.button11.grid(row=3, column=2, pady=5)
 
-        button12 = tk.Button(
+        self.button12 = tk.Button(
             ori_place_frame,
             text="Yaw+",
             font=("Arial", 12),
@@ -1002,9 +1213,9 @@ class Gcode_interface(Node):
             command=self.boton12,
             cursor="hand2",
         )
-        button12.grid(row=2, column=1, padx=5)
+        self.button12.grid(row=2, column=1, padx=5)
 
-        button13 = tk.Button(
+        self.button13 = tk.Button(
             ori_place_frame,
             text="Yaw-",
             font=("Arial", 12),
@@ -1017,9 +1228,9 @@ class Gcode_interface(Node):
             command=self.boton13,
             cursor="hand2",
         )
-        button13.grid(row=2, column=3, padx=5)
+        self.button13.grid(row=2, column=3, padx=5)
 
-        button14 = tk.Button(
+        self.button14 = tk.Button(
             ori_place_frame,
             text="Roll+",
             font=("Arial", 12),
@@ -1032,9 +1243,9 @@ class Gcode_interface(Node):
             command=self.boton14,
             cursor="hand2",
         )
-        button14.grid(row=1, column=3, padx=5)
+        self.button14.grid(row=1, column=3, padx=5)
 
-        button15 = tk.Button(
+        self.button15 = tk.Button(
             ori_place_frame,
             text="Roll-",
             font=("Arial", 12),
@@ -1047,7 +1258,7 @@ class Gcode_interface(Node):
             command=self.boton15,
             cursor="hand2",
         )
-        button15.grid(row=3, column=3, padx=5)
+        self.button15.grid(row=3, column=3, padx=5)
 
         #pos_label = tk.Label(self.root, text='Position', font=("Arial", 14), fg="white", bg=self.backgndColor)
         #pos_label.place(x=600, y=500)
@@ -1056,7 +1267,7 @@ class Gcode_interface(Node):
         pos_place_frame.configure(bg=self.backgndColor)
         pos_place_frame.place(x=600, y=510)
 
-        button16 = tk.Button(
+        self.button16 = tk.Button(
             pos_place_frame,
             text="Home",
             font=("Arial", 12),
@@ -1069,9 +1280,9 @@ class Gcode_interface(Node):
             command=self.boton16,
             cursor="hand2",
         )
-        button16.grid(row=2, column=2, padx=5, pady=5)
+        self.button16.grid(row=2, column=2, padx=5, pady=5)
 
-        button17 = tk.Button(
+        self.button17 = tk.Button(
             pos_place_frame,
             text="Z+",
             font=("Arial", 12),
@@ -1084,9 +1295,9 @@ class Gcode_interface(Node):
             command=self.boton17,
             cursor="hand2",
         )
-        button17.grid(row=1, column=2, pady=5)
+        self.button17.grid(row=1, column=2, pady=5)
 
-        button18 = tk.Button(
+        self.button18 = tk.Button(
             pos_place_frame,
             text="Z-",
             font=("Arial", 12),
@@ -1099,9 +1310,9 @@ class Gcode_interface(Node):
             command=self.boton18,
             cursor="hand2",
         )
-        button18.grid(row=3, column=2, pady=5)
+        self.button18.grid(row=3, column=2, pady=5)
 
-        button19 = tk.Button(
+        self.button19 = tk.Button(
             pos_place_frame,
             text="X-",
             font=("Arial", 12),
@@ -1114,9 +1325,9 @@ class Gcode_interface(Node):
             command=self.boton19,
             cursor="hand2",
         )
-        button19.grid(row=2, column=1, padx=5)
+        self.button19.grid(row=2, column=1, padx=5)
 
-        button20 = tk.Button(
+        self.button20 = tk.Button(
             pos_place_frame,
             text="X+",
             font=("Arial", 12),
@@ -1129,9 +1340,9 @@ class Gcode_interface(Node):
             command=self.boton20,
             cursor="hand2",
         )
-        button20.grid(row=2, column=3, padx=5)
+        self.button20.grid(row=2, column=3, padx=5)
 
-        button21 = tk.Button(
+        self.button21 = tk.Button(
             pos_place_frame,
             text="Y+",
             font=("Arial", 12),
@@ -1144,9 +1355,9 @@ class Gcode_interface(Node):
             command=self.boton21,
             cursor="hand2",
         )
-        button21.grid(row=1, column=1, padx=5)
+        self.button21.grid(row=1, column=1, padx=5)
 
-        button22 = tk.Button(
+        self.button22 = tk.Button(
             pos_place_frame,
             text="Y-",
             font=("Arial", 12),
@@ -1159,9 +1370,9 @@ class Gcode_interface(Node):
             command=self.boton22,
             cursor="hand2",
         )
-        button22.grid(row=3, column=1, padx=5)
+        self.button22.grid(row=3, column=1, padx=5)
 
-        button23 = tk.Button(
+        self.button23 = tk.Button(
             self.root,
             text="Rest",
             font=("Arial", 12),
@@ -1174,9 +1385,9 @@ class Gcode_interface(Node):
             command=self.boton23,
             cursor="hand2",
         )
-        button23.place(x=30, y=400)
+        self.button23.place(x=30, y=400)
 
-        button24 = tk.Button(
+        self.button24 = tk.Button(
             self.root,
             text="Publish Pose",
             font=("Arial", 12),
@@ -1189,9 +1400,9 @@ class Gcode_interface(Node):
             command=self.boton24,
             cursor="hand2",
         )
-        button24.place(x=160, y=400)
+        self.button24.place(x=160, y=400)
 
-        button25 = tk.Button(
+        self.button25 = tk.Button(
             self.root,
             text="Travel",
             font=("Arial", 12),
@@ -1204,9 +1415,9 @@ class Gcode_interface(Node):
             command=self.boton25,
             cursor="hand2",
         )
-        button25.place(x=30, y=470)
+        self.button25.place(x=30, y=470)
 
-        button26 = tk.Button(
+        self.button26 = tk.Button(
             self.root,
             text="Line",
             font=("Arial", 12),
@@ -1219,14 +1430,14 @@ class Gcode_interface(Node):
             command=self.boton26,
             cursor="hand2",
         )
-        button26.place(x=160, y=470)
+        self.button26.place(x=160, y=470)
 
-        button27 = tk.Button(
+        self.button27 = tk.Button(
             self.root,
             text="ARM EXECUTE",
             font=("Arial", 12),
             fg=self.butTextColor,
-            bg=self.redColor,
+            bg="white",
             borderwidth=2,
             relief="raised",
             width=12,
@@ -1234,9 +1445,9 @@ class Gcode_interface(Node):
             command=self.boton27,
             cursor="hand2",
         )
-        button27.place(x=20, y=540)
+        self.button27.place(x=20, y=540)
 
-        button28 = tk.Button(
+        self.button28 = tk.Button(
             self.root,
             text="V +",
             font=("Arial", 12),
@@ -1249,9 +1460,9 @@ class Gcode_interface(Node):
             command=self.boton28,
             cursor="hand2",
         )
-        button28.place(x=190, y=530)
+        self.button28.place(x=190, y=530)
 
-        button29 = tk.Button(
+        self.button29 = tk.Button(
             self.root,
             text="V -",
             font=("Arial", 12),
@@ -1264,12 +1475,12 @@ class Gcode_interface(Node):
             command=self.boton29,
             cursor="hand2",
         )
-        button29.place(x=190, y=560)
+        self.button29.place(x=190, y=560)
 
         self.velocity_label = tk.Label(self.root, text=self.velvar.get(), font=("Arial", 12), fg="white", bg=self.backgndColor)
-        self.velocity_label.place(x=270, y=510)
+        self.velocity_label.place(x=270, y=530)
 
-        button30 = tk.Button(
+        self.button30 = tk.Button(
             self.root,
             text="Update V",
             font=("Arial", 12),
@@ -1282,11 +1493,11 @@ class Gcode_interface(Node):
             command=self.boton30,
             cursor="hand2",
         )
-        button30.place(x=270, y=550)
+        self.button30.place(x=270, y=570)
 
-        button31 = tk.Button(
+        self.button31 = tk.Button(
             self.root,
-            text="Next Calibration",
+            text="Next Corner",
             font=("Arial", 12),
             fg=self.butTextColor,
             bg=self.buttonColor,
@@ -1297,9 +1508,9 @@ class Gcode_interface(Node):
             command=self.boton31,
             cursor="hand2",
         )
-        button31.place(x=200, y=270)
+        self.button31.place(x=200, y=270)
 
-        button32 = tk.Button(
+        self.button32 = tk.Button(
             self.root,
             text="Save Point",
             font=("Arial", 12),
@@ -1312,7 +1523,293 @@ class Gcode_interface(Node):
             command=self.boton32,
             cursor="hand2",
         )
-        button32.place(x=200, y=330)
+        self.button32.place(x=200, y=330)
+
+        manual_place_frame = tk.Frame(self.root)
+        manual_place_frame.configure(bg=self.backgndColor)
+        manual_place_frame.place(x=300, y=400)
+
+        self.button33 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton33,
+            cursor="hand2",
+        )
+        self.button33.grid(row=1, column=1, padx=0, pady=5)
+
+        self.m1var = tk.StringVar()
+        self.m1var.set(self.motor1_text)
+        self.m1_label = tk.Label(manual_place_frame, text=self.m1var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m1_label.grid(row=2, column=1, padx=0, pady=0)
+
+        self.button34 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton34,
+            cursor="hand2",
+        )
+        self.button34.grid(row=3, column=1, padx=0, pady=0)
+
+        self.button35 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton35,
+            cursor="hand2",
+        )
+        self.button35.grid(row=1, column=2, padx=0, pady=5)
+
+        self.m2var = tk.StringVar()
+        self.m2var.set(self.motor2_text)
+        self.m2_label = tk.Label(manual_place_frame, text=self.m2var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m2_label.grid(row=2, column=2, padx=0, pady=0)
+
+        self.button36 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton36,
+            cursor="hand2",
+        )
+        self.button36.grid(row=3, column=2, padx=0, pady=0)
+
+        self.button37 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton37,
+            cursor="hand2",
+        )
+        self.button37.grid(row=1, column=3, padx=0, pady=5)
+
+        self.m3var = tk.StringVar()
+        self.m3var.set(self.motor3_text)
+        self.m3_label = tk.Label(manual_place_frame, text=self.m3var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m3_label.grid(row=2, column=3, padx=0, pady=0)
+
+        self.button38 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton38,
+            cursor="hand2",
+        )
+        self.button38.grid(row=3, column=3, padx=0, pady=0)
+
+        self.button39 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton39,
+            cursor="hand2",
+        )
+        self.button39.grid(row=1, column=4, padx=0, pady=5)
+
+        self.m4var = tk.StringVar()
+        self.m4var.set(self.motor4_text)
+        self.m4_label = tk.Label(manual_place_frame, text=self.m4var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m4_label.grid(row=2, column=4, padx=0, pady=0)
+
+        self.button40 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton40,
+            cursor="hand2",
+        )
+        self.button40.grid(row=3, column=4, padx=0, pady=0)
+
+        self.button41 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton41,
+            cursor="hand2",
+        )
+        self.button41.grid(row=1, column=5, padx=0, pady=5)
+
+        self.m5var = tk.StringVar()
+        self.m5var.set(self.motor5_text)
+        self.m5_label = tk.Label(manual_place_frame, text=self.m5var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m5_label.grid(row=2, column=5, padx=0, pady=0)
+
+        self.button42 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton42,
+            cursor="hand2",
+        )
+        self.button42.grid(row=3, column=5, padx=0, pady=0)
+
+        self.button43 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton43,
+            cursor="hand2",
+        )
+        self.button43.grid(row=1, column=6, padx=0, pady=5)
+
+        self.m6var = tk.StringVar()
+        self.m6var.set(self.motor6_text)
+        self.m6_label = tk.Label(manual_place_frame, text=self.m6var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m6_label.grid(row=2, column=6, padx=0, pady=0)
+
+        self.button44 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton44,
+            cursor="hand2",
+        )
+        self.button44.grid(row=3, column=6, padx=0, pady=0)
+
+        self.button45 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton45,
+            cursor="hand2",
+        )
+        self.button45.grid(row=1, column=7, padx=0, pady=5)
+
+        self.g1var = tk.StringVar()
+        self.g1var.set(self.gripper1_text)
+        self.g1_label = tk.Label(manual_place_frame, text=self.g1var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.g1_label.grid(row=2, column=7, padx=0, pady=0)
+
+        self.button46 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton46,
+            cursor="hand2",
+        )
+        self.button46.grid(row=3, column=7, padx=0, pady=0)
+
+        self.button47 = tk.Button(
+            manual_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton47,
+            cursor="hand2",
+        )
+        self.button47.grid(row=1, column=8, padx=0, pady=5)
+
+        self.g2var = tk.StringVar()
+        self.g2var.set(self.gripper2_text)
+        self.g2_label = tk.Label(manual_place_frame, text=self.g2var.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.g2_label.grid(row=2, column=8, padx=0, pady=0)
+
+        self.button48 = tk.Button(
+            manual_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton48,
+            cursor="hand2",
+        )
+        self.button48.grid(row=3, column=8, padx=0, pady=0)
+
+
 
         button_debug = tk.Button(
             self.root,
@@ -1334,7 +1831,7 @@ class Gcode_interface(Node):
         ros_thread.start()
 
 
-        self.canvas = tk.Canvas(self.root, width=500, height=500, bg="white")
+        self.canvas = tk.Canvas(self.root, width=500, height=400, bg="white")
         self.canvas.place(x=300, y=0)
 
         #x1, y1, x2, y2 = 50, 50, 150, 100
