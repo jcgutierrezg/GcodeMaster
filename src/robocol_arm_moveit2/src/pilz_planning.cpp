@@ -57,8 +57,8 @@ class PlanningNode : public rclcpp::Node {
       move_group_ptr_->setMaxAccelerationScalingFactor(1.0);
       move_group_ptr_->setPlanningTime(10.0);
 
-      velocity = 0.1;
-      accel = 0.1;
+      velocity = 0.3;
+      accel = 0.3;
     }
 
     ~PlanningNode() {

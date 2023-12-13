@@ -53,6 +53,35 @@ def get_quaternion_from_euler(roll, pitch, yaw):
 
 ########################################################################################################################
 
+class LabeledEntry(tk.Frame):
+    def __init__(self, master, label_text, initial_value="", label_options=None, entry_options=None, row=0, column=0, on_enter=None, validate_callback=None, **kwargs):
+        super().__init__(master, **kwargs)
+
+        label_options = label_options or {}
+        entry_options = entry_options or {}
+
+        self.label = tk.Label(self, text=label_text, **label_options)
+        self.label.grid(row=row, column=column, padx=(0, 5))
+
+        self.entry = tk.Entry(self, **entry_options)
+        self.entry.insert(0, initial_value)
+        self.entry.grid(row=row, column=column + 1)
+
+        if on_enter:
+            self.entry.bind("<Return>", on_enter)
+
+        if validate_callback:
+            self.entry.config(validate="key", validatecommand=(self.register(validate_callback), "%P"))
+
+    def get_value(self):
+        return self.entry.get()
+
+    def set_value(self, new_value):
+        self.entry.delete(0, tk.END)
+        self.entry.insert(0, new_value)
+
+
+
 class Gcode_interface(Node):
     global height, width
 
@@ -527,6 +556,9 @@ class Gcode_interface(Node):
             self.motor5_angle = 0.0
             self.motor6_angle = 0.0
 
+            self.gripper1_angle = 0.0
+            self.gripper2_angle = 0.0
+
             self.update_values()
 
         pass
@@ -558,8 +590,7 @@ class Gcode_interface(Node):
         print ("Next Calibration")
 
         strmsg = String()
-        strmsg.data = "line"
-        self.move_type.publish(strmsg)
+    
 
         if(self.calibrate_counter == 0):
 
@@ -567,11 +598,15 @@ class Gcode_interface(Node):
             self.pos_y = self.calibratePoint1[1]
             self.pos_z = self.calibratePoint1[2]
 
+            strmsg.data = "travel"
+
         elif(self.calibrate_counter == 1):
 
             self.pos_x = self.calibratePoint2[0]
             self.pos_y = self.calibratePoint2[1]
             self.pos_z = self.calibratePoint2[2]
+
+            strmsg.data = "line"
 
         elif(self.calibrate_counter == 2):
 
@@ -579,11 +614,15 @@ class Gcode_interface(Node):
             self.pos_y = self.calibratePoint3[1]
             self.pos_z = self.calibratePoint3[2]
 
+            strmsg.data = "line"
+
         elif(self.calibrate_counter == 3):
 
             self.pos_x = self.homepos_x
             self.pos_y = self.homepos_y - 0.05
             self.pos_z = self.homepos_z
+
+            strmsg.data = "line"
 
             self.define_plane(self.calibratePoint1, self.calibratePoint2, self.calibratePoint3)
 
@@ -595,6 +634,8 @@ class Gcode_interface(Node):
 
             self.calibrate_counter = 0
             self.button1['state'] = 'normal'
+
+        self.move_type.publish(strmsg)
 
 
         posemsg = Pose()
@@ -744,6 +785,112 @@ class Gcode_interface(Node):
         self.update_values()
         pass
 
+    def boton49(self):
+        print ("Compensate")
+        boolmsg = Bool()
+        boolmsg.data = True
+        self.compensate.publish(boolmsg)
+
+        pass
+
+    def boton50(self):
+        print ("M1C+")
+        self.motor1_cur += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton51(self):
+        print ("M1C-")
+        self.motor1_cur -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton52(self):
+        print ("M2C+")
+        self.motor2_cur += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton53(self):
+        print ("M2C-")
+        self.motor2_cur -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton54(self):
+        print ("M3C+")
+        self.motor3_cur += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton55(self):
+        print ("M3C-")
+        self.motor3_cur -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton56(self):
+        print ("M4C+")
+        self.motor4_cur += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton57(self):
+        print ("M4C-")
+        self.motor4_cur -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton58(self):
+        print ("M5C+")
+        self.motor5_cur += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton59(self):
+        print ("M5C-")
+        self.motor5_cur -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton60(self):
+        print ("M6C+")
+        self.motor6_cur += self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton61(self):
+        print ("M6C-")
+        self.motor6_cur -= self.manual_resolution
+
+        self.update_values()
+        pass
+
+    def boton62(self):
+        print ("Update Curr")
+        currmsg = Float32MultiArray()
+
+        currmsg.data[0] = [self.motor1_cur]
+        currmsg.data[1] = [self.motor2_cur]
+        currmsg.data[2] = [self.motor3_cur]
+        currmsg.data[3] = [self.motor4_cur]
+        currmsg.data[4] = [self.motor5_cur]
+        currmsg.data[5] = [self.motor6_cur]
+        
+        self.current.publish(currmsg)
+        pass
+
     def boton_debug(self):
         print ("Debug")
 
@@ -789,6 +936,13 @@ class Gcode_interface(Node):
         self.gripper1_text = 'G1: ' + str(round(self.gripper1_angle, 3)) + '°'
         self.gripper2_text = 'G2: ' + str(round(self.gripper2_angle, 3)) + '°'
 
+        self.motor1_cur_text = 'M1: ' + str(round(self.motor1_cur, 3))
+        self.motor2_cur_text = 'M2: ' + str(round(self.motor2_cur, 3))
+        self.motor3_cur_text = 'M3: ' + str(round(self.motor3_cur, 3))
+        self.motor4_cur_text = 'M4: ' + str(round(self.motor4_cur, 3))
+        self.motor5_cur_text = 'M5: ' + str(round(self.motor5_cur, 3))
+        self.motor6_cur_text = 'M6: ' + str(round(self.motor6_cur, 3))
+
         self.xvar.set(self.xpostext)
         self.yvar.set(self.ypostext)
         self.zvar.set(self.zpostext)
@@ -807,6 +961,13 @@ class Gcode_interface(Node):
 
         self.g1var.set(self.gripper1_text)
         self.g2var.set(self.gripper2_text)
+
+        self.m1cur.set(self.motor1_cur_text)
+        self.m2cur.set(self.motor2_cur_text)
+        self.m3cur.set(self.motor3_cur_text)
+        self.m4cur.set(self.motor4_cur_text)
+        self.m5cur.set(self.motor5_cur_text)
+        self.m6cur.set(self.motor6_cur_text)
 
 
         self.xpos_label.config(text=self.xvar.get())
@@ -827,6 +988,13 @@ class Gcode_interface(Node):
 
         self.g1_label.config(text=self.g1var.get())
         self.g2_label.config(text=self.g2var.get())
+
+        self.m1_cur_label.config(text=self.m1cur.get())
+        self.m2_cur_label.config(text=self.m2cur.get())
+        self.m3_cur_label.config(text=self.m3cur.get())
+        self.m4_cur_label.config(text=self.m4cur.get())
+        self.m5_cur_label.config(text=self.m5cur.get())
+        self.m6_cur_label.config(text=self.m6cur.get())
 
 
 
@@ -893,14 +1061,14 @@ class Gcode_interface(Node):
 
         self.gcodetext = ' '
 
-        self.velocity = 0.1
-        self.accel = 0.1
+        self.velocity = 0.3
+        self.accel = 0.3
 
         self.calibrate_counter = 0
 
         self.calibratePoint1 = [self.homepos_x, self.homepos_y - 0.05, self.homepos_z]
-        self.calibratePoint2 = [self.homepos_x - 0.5, self.homepos_y - 0.05, self.homepos_z]
-        self.calibratePoint3 = [self.homepos_x - 0.5, self.homepos_y - 0.05, self.homepos_z - 0.5]
+        self.calibratePoint2 = [self.homepos_x - 0.2, self.homepos_y - 0.05, self.homepos_z]
+        self.calibratePoint3 = [self.homepos_x - 0.2, self.homepos_y - 0.05, self.homepos_z - 0.1]
 
         self.A_plane = 0.0
         self.B_plane = 0.0
@@ -921,8 +1089,15 @@ class Gcode_interface(Node):
         self.motor5_angle = 0.0
         self.motor6_angle = 0.0
 
-        self.gripper1_angle = 90.0
-        self.gripper2_angle = 90.0
+        self.gripper1_angle = 0.0
+        self.gripper2_angle = 0.0
+
+        self.motor1_cur = 512.0
+        self.motor2_cur = 512.0
+        self.motor3_cur = 512.0
+        self.motor4_cur = 512.0
+        self.motor5_cur = 512.0
+        self.motor6_cur = 512.0
 
         self.motor1_text = 'M1: ' + str(round(self.motor1_angle, 3)) + '°'
         self.motor2_text = 'M2: ' + str(round(self.motor2_angle, 3)) + '°'
@@ -933,6 +1108,13 @@ class Gcode_interface(Node):
 
         self.gripper1_text = 'G1: ' + str(round(self.gripper1_angle, 3)) + '°'
         self.gripper2_text = 'G2: ' + str(round(self.gripper2_angle, 3)) + '°'
+
+        self.motor1_cur_text = 'M1: ' + str(round(self.motor1_cur, 3))
+        self.motor2_cur_text = 'M2: ' + str(round(self.motor2_cur, 3))
+        self.motor3_cur_text = 'M3: ' + str(round(self.motor3_cur, 3))
+        self.motor4_cur_text = 'M4: ' + str(round(self.motor4_cur, 3))
+        self.motor5_cur_text = 'M5: ' + str(round(self.motor5_cur, 3))
+        self.motor6_cur_text = 'M6: ' + str(round(self.motor6_cur, 3))
 
         self.veltext = 'Velocity: '+str(round(self.velocity, 5))
 
@@ -954,6 +1136,8 @@ class Gcode_interface(Node):
         self.velocityconfig = self.create_publisher(Float32MultiArray, 'robocol/arm/velocity_accel', 10)
         self.plane_param = self.create_publisher(Float32MultiArray, 'robocol/arm/plane_param', 10)
         self.manual_angles = self.create_publisher(Float32MultiArray, 'robocol/arm/manual_angles', 10)
+        self.compensate = self.create_publisher(Bool, 'robocol/arm/compensate', 10)
+        self.current = self.create_publisher(Float32MultiArray, 'robocol/arm/current', 10)
 
         #self.mapa_base =  255*np.ones((500,500),dtype=np.uint8)
         self.root = tk.Tk()
@@ -1074,6 +1258,9 @@ class Gcode_interface(Node):
         self.xvar.set(self.xpostext)
         self.xpos_label = tk.Label(self.root, text=self.xvar.get(), font=("Arial", 13, "bold"), fg=self.redColor, bg=self.backgndColor)
         self.xpos_label.place(x=20, y=300)
+
+        #self.labeled_entry = LabeledEntry(self.root, "Name:", initial_value="John Doe")
+        #self.labeled_entry.place(x=0,y=0)
 
         self.yvar = tk.StringVar()
         self.yvar.set(self.ypostext)
@@ -1809,6 +1996,250 @@ class Gcode_interface(Node):
         )
         self.button48.grid(row=3, column=8, padx=0, pady=0)
 
+        self.button49 = tk.Button(
+            self.root,
+            text="Comp",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=2,
+            height=1,
+            command=self.boton49,
+            cursor="hand2",
+        )
+        self.button49.place(x=310, y=650)
+
+        current_place_frame = tk.Frame(self.root)
+        current_place_frame.configure(bg=self.backgndColor)
+        current_place_frame.place(x=300, y=300)
+
+        self.button50 = tk.Button(
+            current_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton50,
+            cursor="hand2",
+        )
+        self.button50.grid(row=1, column=1, padx=0, pady=5)
+
+        self.m1cur = tk.StringVar()
+        self.m1cur.set(self.motor1_cur_text)
+        self.m1_cur_label = tk.Label(current_place_frame, text=self.m1cur.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m1_cur_label.grid(row=2, column=1, padx=0, pady=0)
+
+        self.button51 = tk.Button(
+            current_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton51,
+            cursor="hand2",
+        )
+        self.button51.grid(row=3, column=1, padx=0, pady=0)
+
+        self.button52 = tk.Button(
+            current_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton52,
+            cursor="hand2",
+        )
+        self.button52.grid(row=1, column=2, padx=0, pady=5)
+
+        self.m2cur = tk.StringVar()
+        self.m2cur.set(self.motor2_cur_text)
+        self.m2_cur_label = tk.Label(current_place_frame, text=self.m2cur.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m2_cur_label.grid(row=2, column=2, padx=0, pady=0)
+
+        self.button53 = tk.Button(
+            current_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton53,
+            cursor="hand2",
+        )
+        self.button53.grid(row=3, column=2, padx=0, pady=0)
+
+        self.button54 = tk.Button(
+            current_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton54,
+            cursor="hand2",
+        )
+        self.button54.grid(row=1, column=3, padx=0, pady=5)
+
+        self.m3cur = tk.StringVar()
+        self.m3cur.set(self.motor3_cur_text)
+        self.m3_cur_label = tk.Label(current_place_frame, text=self.m3cur.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m3_cur_label.grid(row=2, column=3, padx=0, pady=0)
+
+        self.button55 = tk.Button(
+            current_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton55,
+            cursor="hand2",
+        )
+        self.button55.grid(row=3, column=3, padx=0, pady=0)
+
+        self.button56 = tk.Button(
+            current_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton56,
+            cursor="hand2",
+        )
+        self.button56.grid(row=1, column=4, padx=0, pady=5)
+
+        self.m4cur = tk.StringVar()
+        self.m4cur.set(self.motor4_cur_text)
+        self.m4_cur_label = tk.Label(current_place_frame, text=self.m4cur.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m4_cur_label.grid(row=2, column=4, padx=0, pady=0)
+
+        self.button57 = tk.Button(
+            current_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton57,
+            cursor="hand2",
+        )
+        self.button57.grid(row=3, column=4, padx=0, pady=0)
+
+        self.button58 = tk.Button(
+            current_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton58,
+            cursor="hand2",
+        )
+        self.button58.grid(row=1, column=5, padx=0, pady=5)
+
+        self.m5cur = tk.StringVar()
+        self.m5cur.set(self.motor5_cur_text)
+        self.m5_cur_label = tk.Label(current_place_frame, text=self.m5cur.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m5_cur_label.grid(row=2, column=5, padx=0, pady=0)
+
+        self.button59 = tk.Button(
+            current_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton59,
+            cursor="hand2",
+        )
+        self.button59.grid(row=3, column=5, padx=0, pady=0)
+
+        self.button60 = tk.Button(
+            current_place_frame,
+            text="^",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton60,
+            cursor="hand2",
+        )
+        self.button60.grid(row=1, column=6, padx=0, pady=5)
+
+        self.m6cur = tk.StringVar()
+        self.m6cur.set(self.motor6_cur_text)
+        self.m6_cur_label = tk.Label(current_place_frame, text=self.m6cur.get(), font=("Arial", 10, "bold"), fg="white", bg=self.backgndColor)
+        self.m6_cur_label.grid(row=2, column=6, padx=0, pady=0)
+
+        self.button61 = tk.Button(
+            current_place_frame,
+            text="v",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=1,
+            height=1,
+            command=self.boton61,
+            cursor="hand2",
+        )
+        self.button61.grid(row=3, column=6, padx=0, pady=0)
+
+        self.button62 = tk.Button(
+            current_place_frame,
+            text="Update Curr",
+            font=("Arial", 12),
+            fg=self.butTextColor,
+            bg=self.buttonColor,
+            borderwidth=2,
+            relief="raised",
+            width=6,
+            height=2,
+            command=self.boton62,
+            cursor="hand2",
+        )
+        self.button62.grid(row=1, column=7, padx=0, pady=0)
+
 
 
         button_debug = tk.Button(
@@ -1831,7 +2262,7 @@ class Gcode_interface(Node):
         ros_thread.start()
 
 
-        self.canvas = tk.Canvas(self.root, width=500, height=400, bg="white")
+        self.canvas = tk.Canvas(self.root, width=500, height=300, bg="white")
         self.canvas.place(x=300, y=0)
 
         #x1, y1, x2, y2 = 50, 50, 150, 100
@@ -1840,7 +2271,7 @@ class Gcode_interface(Node):
 
         #print ("minimal_subscriber_publisher")
 
-        self.button1['state'] = 'disabled'
+        #self.button1['state'] = 'disabled'
 
         self.root.mainloop()
 

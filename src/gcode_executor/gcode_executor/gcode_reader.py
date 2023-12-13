@@ -52,12 +52,20 @@ class Gcode_reader(Node):
         self.units = 'mm'
         self.unitsCount = 0
 
-        self.xoffset = 0.5/2
-        self.yoffset = -0.35
-        self.zoffset = 0.5
+        if(self.cylinderMode):
+
+            self.xoffset = 0.05
+            self.yoffset = -0.35
+            self.zoffset = 0.5
+
+        else:
+            self.xoffset = 0.5/2
+            self.yoffset = -0.35
+            self.zoffset = 0.5
 
         self.cylinder_radius = 0.2
-        self.cylinderCoords = [self.xoffset-self.cylinder_radius, -0.5, self.zoffset-self.cylinder_radius]
+        #self.cylinderCoords = [self.xoffset-self.cylinder_radius, -0.5, self.zoffset-self.cylinder_radius]
+        self.cylinderCoords = [0.0, -0.5, 0.0]
 
         self.prevX = self.xoffset
         self.prevY = self.yoffset
@@ -118,7 +126,8 @@ class Gcode_reader(Node):
 
     def calculate_orientation(self, normalized_normal_vector):
         # Apply a -90° rotation around the Z-axis
-        offset_quaternion = np.array([np.cos(-np.pi / 4), 0, 0, np.sin(-np.pi / 4)])
+        #z_offset_quaternion = np.array([np.cos(-np.pi / 4), 0, 0, np.sin(-np.pi / 4)])
+        offset_quaternion = get_quaternion_from_euler(0.0, 0.0, -90.0)
 
         # Calculate the quaternion from the normalized normal vector
         angle = np.arccos(normalized_normal_vector[2])  # Assuming z is up
@@ -130,6 +139,7 @@ class Gcode_reader(Node):
         vector_part = np.sin(angle / 2) * axis_normalized
         
         # Combine the offset and calculated quaternion
+        #quaternion = self.multiply_quaternions(offset_quaternion, np.concatenate(([scalar_part], vector_part)))
         quaternion = self.multiply_quaternions(offset_quaternion, np.concatenate(([scalar_part], vector_part)))
 
         return quaternion
