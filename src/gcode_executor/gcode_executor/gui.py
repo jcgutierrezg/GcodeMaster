@@ -342,6 +342,7 @@ class Gcode_interface(Node):
         self.ori_resolution = 1.0
         self.vel_resolution = 0.001
         self.manual_resolution = 0.1
+        self.current_resolution = 1.0
 
         self.button7['bg'] = self.buttonColor
         self.button6['bg'] = self.blueColor
@@ -354,6 +355,7 @@ class Gcode_interface(Node):
         self.ori_resolution = 10.0
         self.vel_resolution = 0.01
         self.manual_resolution = 1.0
+        self.current_resolution = 10.0
 
         self.button7['bg'] = self.blueColor
         self.button6['bg'] = self.buttonColor
@@ -366,6 +368,7 @@ class Gcode_interface(Node):
         self.ori_resolution = 45.0
         self.vel_resolution = 0.1
         self.manual_resolution = 10.0
+        self.current_resolution = 100.0
 
         self.button7['bg'] = self.buttonColor
         self.button6['bg'] = self.buttonColor
@@ -795,84 +798,84 @@ class Gcode_interface(Node):
 
     def boton50(self):
         print ("M1C+")
-        self.motor1_cur += self.manual_resolution
+        self.motor1_cur += self.current_resolution
 
         self.update_values()
         pass
 
     def boton51(self):
         print ("M1C-")
-        self.motor1_cur -= self.manual_resolution
+        self.motor1_cur -= self.current_resolution
 
         self.update_values()
         pass
 
     def boton52(self):
         print ("M2C+")
-        self.motor2_cur += self.manual_resolution
+        self.motor2_cur += self.current_resolution
 
         self.update_values()
         pass
 
     def boton53(self):
         print ("M2C-")
-        self.motor2_cur -= self.manual_resolution
+        self.motor2_cur -= self.current_resolution
 
         self.update_values()
         pass
 
     def boton54(self):
         print ("M3C+")
-        self.motor3_cur += self.manual_resolution
+        self.motor3_cur += self.current_resolution
 
         self.update_values()
         pass
 
     def boton55(self):
         print ("M3C-")
-        self.motor3_cur -= self.manual_resolution
+        self.motor3_cur -= self.current_resolution
 
         self.update_values()
         pass
 
     def boton56(self):
         print ("M4C+")
-        self.motor4_cur += self.manual_resolution
+        self.motor4_cur += self.current_resolution
 
         self.update_values()
         pass
 
     def boton57(self):
         print ("M4C-")
-        self.motor4_cur -= self.manual_resolution
+        self.motor4_cur -= self.current_resolution
 
         self.update_values()
         pass
 
     def boton58(self):
         print ("M5C+")
-        self.motor5_cur += self.manual_resolution
+        self.motor5_cur += self.current_resolution
 
         self.update_values()
         pass
 
     def boton59(self):
         print ("M5C-")
-        self.motor5_cur -= self.manual_resolution
+        self.motor5_cur -= self.current_resolution
 
         self.update_values()
         pass
 
     def boton60(self):
         print ("M6C+")
-        self.motor6_cur += self.manual_resolution
+        self.motor6_cur += self.current_resolution
 
         self.update_values()
         pass
 
     def boton61(self):
         print ("M6C-")
-        self.motor6_cur -= self.manual_resolution
+        self.motor6_cur -= self.current_resolution
 
         self.update_values()
         pass
@@ -881,12 +884,12 @@ class Gcode_interface(Node):
         print ("Update Curr")
         currmsg = Float32MultiArray()
 
-        currmsg.data[0] = [self.motor1_cur]
-        currmsg.data[1] = [self.motor2_cur]
-        currmsg.data[2] = [self.motor3_cur]
-        currmsg.data[3] = [self.motor4_cur]
-        currmsg.data[4] = [self.motor5_cur]
-        currmsg.data[5] = [self.motor6_cur]
+        currmsg.data.append(self.motor1_cur)
+        currmsg.data.append(self.motor2_cur)
+        currmsg.data.append(self.motor3_cur)
+        currmsg.data.append(self.motor4_cur)
+        currmsg.data.append(self.motor5_cur)
+        currmsg.data.append(self.motor6_cur)
         
         self.current.publish(currmsg)
         pass
@@ -1047,6 +1050,7 @@ class Gcode_interface(Node):
         self.ori_resolution = 10.0
         self.vel_resolution = 0.01
         self.manual_resolution = 1.0
+        self.current_resolution = 10.0
 
         self.cursorX = 0.0
         self.cursorY = 0.0
@@ -1092,12 +1096,12 @@ class Gcode_interface(Node):
         self.gripper1_angle = 0.0
         self.gripper2_angle = 0.0
 
-        self.motor1_cur = 512.0
-        self.motor2_cur = 512.0
-        self.motor3_cur = 512.0
-        self.motor4_cur = 512.0
-        self.motor5_cur = 512.0
-        self.motor6_cur = 512.0
+        self.motor1_cur = 320.0
+        self.motor2_cur = 320.0
+        self.motor3_cur = 320.0
+        self.motor4_cur = 320.0
+        self.motor5_cur = 320.0
+        self.motor6_cur = 320.0
 
         self.motor1_text = 'M1: ' + str(round(self.motor1_angle, 3)) + '°'
         self.motor2_text = 'M2: ' + str(round(self.motor2_angle, 3)) + '°'
